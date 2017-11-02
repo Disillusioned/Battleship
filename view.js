@@ -177,7 +177,7 @@ function btnInit(){
         makeGridClick();
         
         var alert = document.getElementById("alert");
-        alert.innerHTML = "<p>Please place your pieces</p>";
+        alert.innerHTML = "<h2>Please place your pieces</h2>";
         
         document.getElementById("login").innerHTML = "";
     }
