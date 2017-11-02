@@ -164,7 +164,8 @@ function btnInit(){
     btn.onclick = function(){
             
         var playArea = document.getElementById("playArea");
-        playArea.innerHTML.append('<h2>Computer Grid</h2><div id="Computer"></div><div id="ComputerText"></div><br><h2>Player Grid</h2>    <div id="Player"></div><div id="PlayerText"></div><div id="AnimationSection"><img id="aniBoat" src="aniBoat.png" alt="boat"></div>');
+        //This adds in the divs and necessary structs for the game area after the play button has been clicked
+        playArea.innerHTML += ('<h2>Computer Grid</h2><div id="Computer"></div><div id="ComputerText"></div><br><h2>Player Grid</h2>    <div id="Player"></div><div id="PlayerText"></div><div id="AnimationSection"><img id="aniBoat" src="aniBoat.png" alt="boat"></div>');
         
 
         
