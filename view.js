@@ -1,9 +1,6 @@
 //TODO: Create a function to let the player place pieces
 
 
-
-
-
 //creates the player grid
 function createPlayerTable(){
 var tr = 10,
