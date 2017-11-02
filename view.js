@@ -158,7 +158,7 @@ function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 i
     }
 }
 
-//initializes the buttons on the page
+//initializes the buttons on the page ( RESET AND PLAY )
 function btnInit(){
     var btn = document.getElementById("Play");
     btn.onclick = function(){
@@ -180,9 +180,6 @@ function btnInit(){
         alert.innerHTML = "<p>Please place your pieces</p>";
         
         document.getElementById("login").innerHTML = "";
-        
-        
-        
     }
     
     var rst = document.getElementById("reset");
