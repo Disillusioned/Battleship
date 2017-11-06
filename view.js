@@ -158,6 +158,12 @@ function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 i
     }
 }
 
+
+
+
+
+
+
 //initializes the buttons on the page ( RESET AND PLAY )
 function btnInit(){
     var btn = document.getElementById("Play");
