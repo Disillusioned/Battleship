@@ -183,6 +183,7 @@ function btnInit(){
 
         //HERE WE WILL ASK THE PLAYERS TO PLACE THE PIECES..
         //TODO: Move all of this to another function, then reference the function here
+        
     }
     
     var rst = document.getElementById("reset");
