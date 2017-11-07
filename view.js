@@ -97,11 +97,11 @@ doc.innerHTML = createComputerTable();
 function makeGridClick(){  
     
     //This makes the computer side clickable
-    var computerCells = document.getElementById("Computer");
-    var otherCells = computerCells.getElementsByTagName("td");
+    var computer = document.getElementById("Computer");
+    var computerCells = computer.getElementsByTagName("td");
     var numCells = 100; //number of cells in the whole table
     for(var i = 0; i < numCells; ++i){
-        otherCells[i].onclick =  function(){
+        computerCells[i].onclick =  function(){
             var col = this.cellIndex;
             var row = this.parentNode.rowIndex;
             clickBait(row, col, 1);
@@ -109,8 +109,8 @@ function makeGridClick(){
     }
     
     //This makes the player side clickable
-    var playerCells = document.getElementById("Player");
-    var cells = playerCells.getElementsByTagName("td"); //should now create an array that has all of the cells in it.
+    var player = document.getElementById("Player");
+    var playerCells = player.getElementsByTagName("td"); //should now create an array that has all of the cells in it.
    
     for(var i = 0; i < numCells; ++i){
         
@@ -183,7 +183,7 @@ function btnInit(){
 
         //HERE WE WILL ASK THE PLAYERS TO PLACE THE PIECES..
         //TODO: Move all of this to another function, then reference the function here
-        
+
     }
     
     var rst = document.getElementById("reset");
