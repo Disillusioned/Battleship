@@ -25,3 +25,7 @@ img{
 #AnimationSection{
     height: 1000px;
 }
+
+td:hover{
+    background-color: black;
+}
