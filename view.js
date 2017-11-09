@@ -310,9 +310,21 @@ function clearLocalStorage(){
 
 
 function hoverMulti(){
-    var playerTable = document.getElementById("Player");
+    var playerArea = document.getElementById("Player");
+    var playTable = playerArea.getElementsByTagName("table"); // this should get the table from the Player Area
+    
     var selectedPiece = document.getElementById("pieceSelector");
-    var 
+    if(document.getElementById("radio1").checked){
+        var orientation = 0; // horizontal selected
+    }
+    else if (document.getElementById("radio2").checked){
+        var orientation = 1; //vertical selected
+    }
+
+    //need a way to access the column and row that we are hovering over, should do it the same way as the onclick event 
+    //so what I can do is get the column and row using this keyword
+    //then pass those into this function inside of the onblur function
+
 }
 
 
