@@ -179,6 +179,7 @@ function btnInit(){
         
         var alert = document.getElementById("alert");
         alert.innerHTML = "<h2>Please place your pieces</h2>";
+
         
         document.getElementById("login").innerHTML = "";
 
@@ -309,7 +310,7 @@ function clearLocalStorage(){
 
 
 function hoverMulti(){
-
+    
 }
 
 
