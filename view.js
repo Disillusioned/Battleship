@@ -106,7 +106,11 @@ function makeGridClick(){
             var row = this.parentNode.rowIndex;
             clickBait(row, col, 1);
         }
-        computerCells[i].onclick = hoverMulti();
+        computerCells[i].onmouseover = function(){
+            var col = this.cellIndex;
+            var row = this.parentNode.rowIndex;
+            hoverMulti(row, col);
+        }
     }
     
     //This makes the player side clickable
@@ -119,6 +123,11 @@ function makeGridClick(){
             var col = this.cellIndex;               //These two lines of code work, even though the auto finisher didnt pick up 
             var row = this.parentNode.rowIndex;     // the names of cellIndex and rowIndex.
             clickBait(row, col, 0);
+        }
+        playerCells[i].onmouseover = function(){
+            var col = this.cellIndex;
+            var row = this.parentNode.rowIndex;
+            hoverMulti(row, col);
         }
     }
 }
@@ -309,7 +318,7 @@ function clearLocalStorage(){
 }
 
 
-function hoverMulti(){
+function hoverMulti(row, col){
     var playerArea = document.getElementById("Player");
     var playTable = playerArea.getElementsByTagName("table"); // this should get the table from the Player Area
     
@@ -324,6 +333,8 @@ function hoverMulti(){
     //need a way to access the column and row that we are hovering over, should do it the same way as the onclick event 
     //so what I can do is get the column and row using this keyword
     //then pass those into this function inside of the onblur function
+
+    playTable[0].rows[row].column[column]
 
 }
 
