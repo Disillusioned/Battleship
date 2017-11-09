@@ -106,7 +106,7 @@ function makeGridClick(){
             var row = this.parentNode.rowIndex;
             clickBait(row, col, 1);
         }
-        //computerCells[i].onblur
+        computerCells[i].onclick = hoverMulti();
     }
     
     //This makes the player side clickable
@@ -310,7 +310,9 @@ function clearLocalStorage(){
 
 
 function hoverMulti(){
-    
+    var playerTable = document.getElementById("Player");
+    var selectedPiece = document.getElementById("pieceSelector");
+    var 
 }
 
 
