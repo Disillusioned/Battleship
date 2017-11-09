@@ -106,12 +106,9 @@ function makeGridClick(){
             var row = this.parentNode.rowIndex;
             clickBait(row, col, 1);
         }
-        computerCells[i].onmouseover = function(){
-            var col = this.cellIndex;
-            var row = this.parentNode.rowIndex;
-            hoverMulti(row, col);
-        }
     }
+
+
     
     //This makes the player side clickable
     var player = document.getElementById("Player");
@@ -334,7 +331,7 @@ function hoverMulti(row, col){
     //so what I can do is get the column and row using this keyword
     //then pass those into this function inside of the onblur function
 
-    playTable[0].rows[row].column[column]
+    playTable[0].rows[row].cells[col].style.backgroundColor = "grey";
 
 }
 
