@@ -106,6 +106,7 @@ function makeGridClick(){
             var row = this.parentNode.rowIndex;
             clickBait(row, col, 1);
         }
+        //computerCells[i].onblur
     }
     
     //This makes the player side clickable
@@ -114,7 +115,7 @@ function makeGridClick(){
    
     for(var i = 0; i < numCells; ++i){
         
-        cells[i].onclick = function(){
+        playerCells[i].onclick = function(){
             var col = this.cellIndex;               //These two lines of code work, even though the auto finisher didnt pick up 
             var row = this.parentNode.rowIndex;     // the names of cellIndex and rowIndex.
             clickBait(row, col, 0);
@@ -304,6 +305,11 @@ function clearLocalStorage(){
         var div = document.getElementById("test");
         div.innerHTML = "<p> Local Storage Cleared </p>";
     }
+}
+
+
+function hoverMulti(){
+
 }
 
 
