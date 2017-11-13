@@ -28,7 +28,7 @@ var j = 0;
 //object ctor for game pieces.  
 //Orien is horizontal or vertical orientation
 function piece(type, orien){
-    this.type = type; //refer to const names below for which type of piece it is
+    this.type = type;
     
     this.sizeOf = function(){
         if(type == 5){
@@ -51,14 +51,14 @@ function piece(type, orien){
         }
     }
     this.orientation = orien; //0 = horizontal, 1 = vertical
-}
+    this.prevTargeted == false; //this can be modified to true later on after it has been hit by the computer
 
-    
-//This is to create a gameboard object that will be the two arrays that I use
-//Piece is an int that determines which piece is occupying this space
-function gameboard(piece){
-    this.isHit = 0; //1 Hit, 0 nothing yet, -1 Miss
-    this.isPiece = piece; //Piece definitions are given in the piece CTOR
+    //Type to Name def
+    //5 -- Carrier
+    //4 -- Battleship
+    //3 -- Submarine
+    //2 -- Destroyer
+    //1 -- Patrol
 }
 
 
