@@ -109,13 +109,17 @@ function prevTargeted(row, col, player){
 	if(col >= 10 || row >= 10){}// do nothing, its out of the bounds of the board
 	else{
 
-			if(player == 0)
+			if(player == 0) //HUMAN
 			{
-				return playerBoard[row][col].isHit;
+                if(playerBoard[row][col] == 0 || playerBoard[row][col].prevTargeted == 0)
+                {return false;}
+                else{return true;}
 			}
-			else
+			else // cOMPUTER
 			{
-				return compBoard[row][col].isHit;
+                if(compBoard[row][col] == 0 || compBoard[row][col].prevTargeted == 0)
+                {return false;}
+                else {return true;}
 			}
 		}
 }
