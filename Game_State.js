@@ -28,7 +28,7 @@ var j = 0;
 //object ctor for game pieces.  
 //Orien is horizontal or vertical orientation
 function piece(type, orien){
-    this.type = type;
+    this.type = type; // refer to comments at bottom for type definition
     
     this.sizeOf = function(){
         if(type == 5){
@@ -64,9 +64,9 @@ function piece(type, orien){
 
 function initArrays(){
     for(i = 0; i < boardWidth; ++i){
-        for(j = 0; j < boardHeight; ++j){
-            playerBoard[i][j] = new gameboard(new piece(-1,0));
-            compBoard[i][j] = new gameboard(new piece(-1,0));
+        for(j = 0; j < boardHeight; ++j){ //init both arrays at zeroes meaning there are no pieces yet.
+            playerBoard[i][j] = 0;
+            compBoard[i][j] = 0;
         }
     }
 }
@@ -80,18 +80,32 @@ function getSquarePiece(row, col, player){
 	if(col == 10 || row == 10){}
 	else{
 
-			if(player == 0) //PLAYER IS 0
+			if(player == 0) //PLAYER IS #0
 			{
-				return playerBoard[row][col].isPiece;
+                if(playerBoard[row][col] == 0)
+                {
+                    return false;
+                }
+                else 
+                {
+                    return true;
+                }
 			}
 			else //COMPUTER IS 1
 			{
-				return compBoard[row][col].isPiece;
+                if(compBoard[row][col] == 0)
+                {
+                    return false; //its not a hit
+                }
+                else
+                {
+                    return true;
+                }
 			}
 		}
 }
 
-function getSquareHit(row, col, player){
+function prevTargeted(row, col, player){
 	if(col >= 10 || row >= 10){}// do nothing, its out of the bounds of the board
 	else{
 

@@ -138,17 +138,20 @@ function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 i
     
     //Now check if its a hit or a miss.
         
-    if(getSquarePiece(r,column, 1) == "CARRIER" || getSquarePiece(column,r, 1) == "BATTLE" || getSquarePiece(column,r, 1) == "PATROL" || getSquarePiece(column,r, 1) == "DESTROY" || getSquarePiece(column,r, 1) == "SUB") // IF IT WAS A PIECE
+    if(getSquarePiece(r, column, 1) == true)//It was a piece
     {
         //It was a hit
+        //change the piece to say it has been hit (prevTargeted)
+        //place the graphic of a hit
         cell.innerHTML = "<img src=hit.png alt=hit>";
+        compBoard[r][col].prevTargeted = true;
     }
     else{
         //It was a miss
+        //change the grid to say that it has been targeted already
+        //place the miss graphic
         cell.innerHTML = "<img src=miss.png alt=miss>";
-        if(getSquareHit(column,r,1) == 0){
-            hit(column,r,1);
-        }
+        compBoard[r][col] = 1;
     }
     
     }
@@ -156,7 +159,17 @@ function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 i
     var side = document.getElementById("Player"); //get the player div
     var grid = side.getElementsByTagName("table"); //get the the table in the player div
     var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
-    cell.innerHTML = "<p>You clicked me!</p>";
+    
+    if(getSquarePiece(r,column, 0) == true)//player piece
+    {
+        cell.innerHTML = "<img src=hit.png alt=hit>";
+        playerBoard[r][col].prevTargeted = true;
+    }
+    else{
+        //It was a miss
+        cell.innerHTML = "<img src=miss.png alt=miss>";
+        playerBoard[r][col] == 1;
+        }
     
     //Now need to display text of where the person clicked, for assignment 4
     var putText = document.getElementById("PlayerText");
