@@ -129,6 +129,8 @@ function prevTargeted(row, col, player){
 
 
 //GAMESTATE INFORMATION MODIFICATION (VIEW -> GAMESTATE)
+
+// THIS NEEDS TO BE MODIFIED TO USE THE NEW PIECE OBJ
 function hit(column,row,player){
     if(player == 0){
         playerHitGrid[row][column] = 1;

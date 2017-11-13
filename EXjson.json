@@ -1,0 +1,11 @@
+{
+ "turn" :  0,
+
+"playerHealth" : 17,
+"opponentHealth" : 17,
+"playerShotsRemaining" : 1,
+"aiShotsRemaining": 1,
+
+"playerBoard" : [[],[],[],[],[],[],[],[],[],[]],
+"compBoard" : [[],[],[],[],[],[],[],[],[],[]]
+}
