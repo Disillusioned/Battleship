@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <link rel="stylesheet" type="text/css" href="style.css">
 <div id="intro">
@@ -18,15 +19,38 @@
 
 
 <div id=testTable>
-    <table>
+    <div id="turn"></div>
+    <div id="playerHealth"></div>
+    <div id="compHealth"></div>
+    <div id="shotsRemain"></div>
+    <table id="compBoard">
         <tr>
-            <td></td><td></td><td></td><td></td><td></td><td></td>
+            <td></td><td></td><td></td>
+        </tr>
+        <tr>
+            <td></td><td></td><td></td>
+        </tr>
+        <tr>
+            <td></td><td></td><td></td>
         </tr>
     </table>
+
+    <table id="playerBoard">
+            <tr>
+                <td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td></td><td></td><td></td>
+            </tr>
+        </table>
 
 </div>
     
 <script src="Game_State.js"></script>
 <script src="view.js"></script>
 <script src="initView.js"></script>
+<script src="parse.js"></script>
 </html>
