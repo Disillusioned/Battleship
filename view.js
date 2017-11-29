@@ -97,27 +97,34 @@ doc.innerHTML = createComputerTable();
 function makeGridClick(){  
     
     //This makes the computer side clickable
-    var computerCells = document.getElementById("Computer");
-    var otherCells = computerCells.getElementsByTagName("td");
+    var computer = document.getElementById("Computer");
+    var computerCells = computer.getElementsByTagName("td");
     var numCells = 100; //number of cells in the whole table
     for(var i = 0; i < numCells; ++i){
-        otherCells[i].onclick =  function(){
+        computerCells[i].onclick =  function(){
             var col = this.cellIndex;
             var row = this.parentNode.rowIndex;
             clickBait(row, col, 1);
         }
     }
+
+
     
     //This makes the player side clickable
-    var playerCells = document.getElementById("Player");
-    var cells = playerCells.getElementsByTagName("td"); //should now create an array that has all of the cells in it.
+    var player = document.getElementById("Player");
+    var playerCells = player.getElementsByTagName("td"); //should now create an array that has all of the cells in it.
    
     for(var i = 0; i < numCells; ++i){
         
-        cells[i].onclick = function(){
+        playerCells[i].onclick = function(){
             var col = this.cellIndex;               //These two lines of code work, even though the auto finisher didnt pick up 
             var row = this.parentNode.rowIndex;     // the names of cellIndex and rowIndex.
             clickBait(row, col, 0);
+        }
+        playerCells[i].onmouseover = function(){
+            var col = this.cellIndex;
+            var row = this.parentNode.rowIndex;
+            hoverMulti(row, col);
         }
     }
 }
@@ -131,17 +138,20 @@ function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 i
     
     //Now check if its a hit or a miss.
         
-    if(getSquarePiece(r,column, 1) == "CARRIER" || getSquarePiece(column,r, 1) == "BATTLE" || getSquarePiece(column,r, 1) == "PATROL" || getSquarePiece(column,r, 1) == "DESTROY" || getSquarePiece(column,r, 1) == "SUB") // IF IT WAS A PIECE
+    if(getSquarePiece(r, column, 1) == true)//It was a piece
     {
         //It was a hit
+        //change the piece to say it has been hit (prevTargeted)
+        //place the graphic of a hit
         cell.innerHTML = "<img src=hit.png alt=hit>";
+        compBoard[r][col].prevTargeted = true;
     }
     else{
         //It was a miss
+        //change the grid to say that it has been targeted already
+        //place the miss graphic
         cell.innerHTML = "<img src=miss.png alt=miss>";
-        if(getSquareHit(column,r,1) == 0){
-            hit(column,r,1);
-        }
+        compBoard[r][col] = 1;
     }
     
     }
@@ -149,7 +159,17 @@ function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 i
     var side = document.getElementById("Player"); //get the player div
     var grid = side.getElementsByTagName("table"); //get the the table in the player div
     var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
-    cell.innerHTML = "<p>You clicked me!</p>";
+    
+    if(getSquarePiece(r,column, 0) == true)//player piece
+    {
+        cell.innerHTML = "<img src=hit.png alt=hit>";
+        playerBoard[r][col].prevTargeted = true;
+    }
+    else{
+        //It was a miss
+        cell.innerHTML = "<img src=miss.png alt=miss>";
+        playerBoard[r][col] == 1;
+        }
     
     //Now need to display text of where the person clicked, for assignment 4
     var putText = document.getElementById("PlayerText");
@@ -178,8 +198,13 @@ function btnInit(){
         
         var alert = document.getElementById("alert");
         alert.innerHTML = "<h2>Please place your pieces</h2>";
+
         
         document.getElementById("login").innerHTML = "";
+
+        //HERE WE WILL ASK THE PLAYERS TO PLACE THE PIECES..
+        //TODO: Move all of this to another function, then reference the function here
+
     }
     
     var rst = document.getElementById("reset");
@@ -300,6 +325,27 @@ function clearLocalStorage(){
         var div = document.getElementById("test");
         div.innerHTML = "<p> Local Storage Cleared </p>";
     }
+}
+
+
+function hoverMulti(row, col){
+    var playerArea = document.getElementById("Player");
+    var playTable = playerArea.getElementsByTagName("table"); // this should get the table from the Player Area
+    
+    var selectedPiece = document.getElementById("pieceSelector");
+    if(document.getElementById("radio1").checked){
+        var orientation = 0; // horizontal selected
+    }
+    else if (document.getElementById("radio2").checked){
+        var orientation = 1; //vertical selected
+    }
+
+    //need a way to access the column and row that we are hovering over, should do it the same way as the onclick event 
+    //so what I can do is get the column and row using this keyword
+    //then pass those into this function inside of the onblur function
+
+    playTable[0].rows[row].cells[col].style.backgroundColor = "grey";
+
 }
 
 

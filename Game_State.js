@@ -28,7 +28,7 @@ var j = 0;
 //object ctor for game pieces.  
 //Orien is horizontal or vertical orientation
 function piece(type, orien){
-    this.type = type; //refer to const names below for which type of piece it is
+    this.type = type; // refer to comments at bottom for type definition
     
     this.sizeOf = function(){
         if(type == 5){
@@ -51,22 +51,22 @@ function piece(type, orien){
         }
     }
     this.orientation = orien; //0 = horizontal, 1 = vertical
-}
+    this.prevTargeted == false; //this can be modified to true later on after it has been hit by the computer
 
-    
-//This is to create a gameboard object that will be the two arrays that I use
-//Piece is an int that determines which piece is occupying this space
-function gameboard(piece){
-    this.isHit = 0; //1 Hit, 0 nothing yet, -1 Miss
-    this.isPiece = piece; //Piece definitions are given in the piece CTOR
+    //Type to Name def
+    //5 -- Carrier
+    //4 -- Battleship
+    //3 -- Submarine
+    //2 -- Destroyer
+    //1 -- Patrol
 }
 
 
 function initArrays(){
     for(i = 0; i < boardWidth; ++i){
-        for(j = 0; j < boardHeight; ++j){
-            playerBoard[i][j] = new gameboard(new piece(-1,0));
-            compBoard[i][j] = new gameboard(new piece(-1,0));
+        for(j = 0; j < boardHeight; ++j){ //init both arrays at zeroes meaning there are no pieces yet.
+            playerBoard[i][j] = 0;
+            compBoard[i][j] = 0;
         }
     }
 }
@@ -80,28 +80,46 @@ function getSquarePiece(row, col, player){
 	if(col == 10 || row == 10){}
 	else{
 
-			if(player == 0) //PLAYER IS 0
+			if(player == 0) //PLAYER IS #0
 			{
-				return playerBoard[row][col].isPiece;
+                if(playerBoard[row][col] == 0)
+                {
+                    return false;
+                }
+                else 
+                {
+                    return true;
+                }
 			}
 			else //COMPUTER IS 1
 			{
-				return compBoard[row][col].isPiece;
+                if(compBoard[row][col] == 0)
+                {
+                    return false; //its not a hit
+                }
+                else
+                {
+                    return true;
+                }
 			}
 		}
 }
 
-function getSquareHit(row, col, player){
+function prevTargeted(row, col, player){
 	if(col >= 10 || row >= 10){}// do nothing, its out of the bounds of the board
 	else{
 
-			if(player == 0)
+			if(player == 0) //HUMAN
 			{
-				return playerBoard[row][col].isHit;
+                if(playerBoard[row][col] == 0 || playerBoard[row][col].prevTargeted == 0)
+                {return false;}
+                else{return true;}
 			}
-			else
+			else // cOMPUTER
 			{
-				return compBoard[row][col].isHit;
+                if(compBoard[row][col] == 0 || compBoard[row][col].prevTargeted == 0)
+                {return false;}
+                else {return true;}
 			}
 		}
 }
@@ -111,6 +129,8 @@ function getSquareHit(row, col, player){
 
 
 //GAMESTATE INFORMATION MODIFICATION (VIEW -> GAMESTATE)
+
+// THIS NEEDS TO BE MODIFIED TO USE THE NEW PIECE OBJ
 function hit(column,row,player){
     if(player == 0){
         playerHitGrid[row][column] = 1;

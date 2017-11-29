@@ -6,5 +6,4 @@
 function initView(){
     var playArea = document.getElementById("playArea");
     playArea.innerHTML = '<br><button id="Play">Play</button> <button id="reset">Reset</button><p>Select an Orientation</p><select id="orienSelector"><option value="horizontal">Horizontal</option><option value="vertical">Vertical</option></select>';
-
 }

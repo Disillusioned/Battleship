@@ -1,0 +1,19 @@
+{
+ "turn" :  1,
+
+"playerHealth" : 17,
+"opponentHealth" : 10,
+"playerShotsRemaining" : 1,
+"aiShotsRemaining": 1,
+
+"playerBoard" : [
+    [{"type":3,"orien":0,"size":3,"prevTargeted":false, "isPiece":true}, {"type":3,"orien":0,"size":3,"prevTargeted":false,"isPiece":true}, {"type":3,"orien":0,"size":3,"prevTargeted":false,"isPiece":true}],
+    [0,0,0],
+    [0,1,0]
+],
+"compBoard" : [
+    [0,{"type":3,"orien":1,"size":3,"prevTargeted":false,"isPiece":true},0],
+    [0, {"type":3,"orien":1,"size":3,"prevTargeted":true,"isPiece":true},0],
+    [1, {"type":3,"orien":1,"size":3,"prevTargeted":true,"isPiece":true},0]
+]
+}
