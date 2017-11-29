@@ -5,6 +5,5 @@
 
 function initView(){
     var playArea = document.getElementById("playArea");
-    playArea.innerHTML = '<br><button id="Play">Play</button> <button id="reset">Reset</button><p>Select a piece to place:</p><select id="pieceSelector"><option value="battleship">Battleship</option><option value="carrier">Aircraft Carrier</option><option value="destroyer">Destroyer</option><option value="submarine">Submarine</option><option value="patrol">Patrol</option></select><br><input type="radio" id="radio0" name="orientation" value="Horizontal" checked>Horizontal <br><input type="radio" id="radio1" name="orientation" value="Vertical" checked>Vertical <br>';
-
+    playArea.innerHTML = '<br><button id="Play">Play</button> <button id="reset">Reset</button><p>Select an Orientation</p><select id="orienSelector"><option value="horizontal">Horizontal</option><option value="vertical">Vertical</option></select>';
 }
