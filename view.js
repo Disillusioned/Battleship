@@ -304,16 +304,6 @@ function submitClick()
     }
 }
 
-function clearClick(){
-    var clear = document.getElementById("clear");
-    clear.onclick = function(){
-        var username = document.getElementById("Username");
-        var pass = document.getElementById("password");
-        
-        username.value = "";
-        password.value = "";
-    }
-}
 
 function clearLocalStorage(){
     var clearStorage = document.getElementById("clearLocalStorage");
@@ -370,7 +360,6 @@ function piecePlace(){
 
 //called functions section
 //These are the only functions that are called when the game originally starts
-clearClick();
 submitClick();
 clearLocalStorage();
 makeGridClick(0);
@@ -380,3 +369,24 @@ makeGridClick(0);
 //        computerCells[i].onclick =  function(){
 //            var col = this.cellIndex;
 //            var row = this.parentNode.rowIndex;
+
+
+
+
+
+
+
+//CODE GRAVEYARD
+//
+//
+// //this function is now deprecated, no longer needed for login area of page
+// function clearClick(){
+//     var clear = document.getElementById("clear");
+//     clear.onclick = function(){
+//         var username = document.getElementById("Username");
+//         var pass = document.getElementById("password");
+        
+//         username.value = "";
+//         password.value = "";
+//     }
+// }
