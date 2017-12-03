@@ -161,9 +161,6 @@ function btnInit(){
         //TODO: Move all of this to another function, then reference the function here
 
     }
-
-    var playArea = document.getElementById("playArea");
-    playArea.removeChild(btn);
 }
 
 //function that is going handle placement of pieces
