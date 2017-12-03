@@ -125,6 +125,22 @@ function prevTargeted(row, col, player){
 }
 
 
+function checkHor(row, col, length){
+    var legal = false;
+    for(var i = 0; i < length; ++i){
+        if(playerBoard[row][col + i] == 0){
+            legal = true;
+        }
+        else {
+            legal = false;
+            break;
+        }    
+    }
+
+    return legal;
+}
+
+
 
 
 

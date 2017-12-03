@@ -106,14 +106,16 @@ var counter = 5; // This will be the counter used when placing pieces
 function makeGridClick(time){  
     if(time == 0){ //The first time this gets run, to let player put pieces on board
         var playerArea = document.getElementById("Player");
-        var table = playerArea.getElementsByTagName("td");
-        var numCells = 100;
-        for(var i =0; i < numCells; ++i){
-            table[i].onclick = function(){
+        var table = playerArea.getElementsByTagName("table");
+        var numRows = 10;
+        var numCol = 10;
+        for(var i =0; i < numRows; ++i){
+            for(var j = 0; j < numCol; ++j){
+            table[0].rows[i].cells[j].onclick = function(){
                 var col = this.cellIndex;
                 var row = this.parentNode.rowIndex;
                 var orient = document.getElementById("orienSelector").value; // This should come back horizontal or vertical
-                while(counter >= 5){ // it doesnt matter which cell is calling into this while loop because counter is global it will always modify the same variable
+                while(counter <= 5){ // it doesnt matter which cell is calling into this while loop because counter is global it will always modify the same variable
                     if(counter == 5){ // placing aircraft carrier (dont have to check is this place is already taken by another piece)
                         //check orientation 
                         //check size of the piece (usually the counter number, but will change later)
@@ -122,11 +124,18 @@ function makeGridClick(time){
                         //if else statement for orientation 
                         //then can do math to see if all grid segments are legal
                         if(orient == "horizontal"){
-                            //need a function that checks the next spaces horizontally....
+                            if(checkHor(row, col, size)){ // if checkHor comes back true this runs
+                                //need to shade in the boxes for the piece
+                                table[0].rows[row].cells[col].style.backgroundcolor = "black";
+                            }
+                            else{
+                                window.alert("Illegal placement, please try again.");
+                            }
                         }
                         
                     }
                 }
+            }
             }
         }
     }
@@ -161,20 +170,6 @@ function btnInit(){
     }
 }
 
-//function that is going handle placement of pieces
-function piecePlace(){
-    var counter = 5; //this is the amount of pieces that their are
-    while (counter >= 0){
-        //Get the grid coordinate that the player inputs
-        //then check that the coordinate, as well as the X amount in the orientation is valid
-        //Then change all of the blocks to black for the ship place
-        
-
-
-
-        --counter;
-    }
-}
 
 
 
