@@ -121,7 +121,9 @@ function makeGridClick(time){
                         
                         //if else statement for orientation 
                         //then can do math to see if all grid segments are legal
-
+                        if(orient == "horizontal"){
+                            //need a function that checks the next spaces horizontally....
+                        }
                         
                     }
                 }
@@ -155,10 +157,6 @@ function btnInit(){
         var alert = document.getElementById("alert");
         alert.innerHTML = "<h2>Please place your pieces</h2>";
         alert.innerHTML = "<h2>Select a grid box to place your pieces</h2>";
-
-        //INSERT FUNCTION HERE TO HANDLE THE PLACEMENT OF PIECES
-        //HERE WE WILL ASK THE PLAYERS TO PLACE THE PIECES..
-        //TODO: Move all of this to another function, then reference the function here
 
     }
 }
