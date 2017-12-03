@@ -126,10 +126,19 @@ function makeGridClick(time){
                         if(orient == "horizontal"){
                             if(checkHor(row, col, size)){ // if checkHor comes back true this runs
                                 //need to shade in the boxes for the piece
-                                table[0].rows[row].cells[col].style.backgroundcolor = "black";
+                                for(var x = 0; x < size; ++x){
+                                    table[0].rows[row].cells[col + x].setAttribute("bgcolor", "black");
+                                }
                             }
                             else{
                                 window.alert("Illegal placement, please try again.");
+                            }
+                        }
+                        else{ //its vertical
+                            if(checkVert(row, col, size)){
+                                for(var x = 0; x < size; ++x){
+                                    table[0].rows[row + x].cells[col].setAttribute("bgcolor", "black");
+                                }
                             }
                         }
                         

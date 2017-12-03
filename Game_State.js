@@ -140,6 +140,20 @@ function checkHor(row, col, length){
     return legal;
 }
 
+function checkVert(row, col, height){
+    var legal = false;
+    for(var i = 0; i < height; ++i){
+        if(playerBoard[row + i][col] == 0){
+            legal = true;
+        }
+        else{
+            legal = false;
+            break;
+        }
+    }
+    return legal;
+}
+
 
 
 
