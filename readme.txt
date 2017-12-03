@@ -6,3 +6,5 @@ style.css (handles all style of the html page)
 
 everything else is non essential/unecessary/can be deleted
 
+
+Also this file shows up on github
