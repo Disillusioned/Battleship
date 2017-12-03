@@ -93,43 +93,41 @@ var doc = document.getElementById("Computer");
 doc.innerHTML = createComputerTable();
 }
 
+var counter = 5; // This will be the counter used when placing pieces
 //Function make all cells in the tables clickable
-function makeGridClick(){  
-    
-    //This makes the computer side clickable
-    var computer = document.getElementById("Computer");
-    var computerCells = computer.getElementsByTagName("td");
-    var numCells = 100; //number of cells in the whole table
-    for(var i = 0; i < numCells; ++i){
-        computerCells[i].onclick =  function(){
-            var col = this.cellIndex;
-            var row = this.parentNode.rowIndex;
-            clickBait(row, col, 1);
-        }
-    }
+function makeGridClick(time){  
+    if(time == 0){ //The first time this gets run, to let player put pieces on board
+        var playerArea = document.getElementById("Player");
+        var table = playerArea.getElementsByTagName("td");
+        var numCells = 100;
+        for(var i =0; i < numCells; ++i){
+            table[i].onclick = function(){
+                var col = this.cellIndex;
+                var row = this.parentNode.rowIndex;
+                var orient = document.getElementById("orienSelector").value; // This should come back horizontal or vertical
+                while(counter >= 5){ // it doesnt matter which cell is calling into this while loop because counter is global it will always modify the same variable
+                    if(counter == 5){ // placing aircraft carrier (dont have to check is this place is already taken by another piece)
+                        //check orientation 
+                        //check size of the piece (usually the counter number, but will change later)
+                        var size = counter; //This is the length of the piece
+                        
+                        //if else statement for orientation 
+                        //then can do math to see if all grid segments are legal
 
-
-    
-    //This makes the player side clickable
-    var player = document.getElementById("Player");
-    var playerCells = player.getElementsByTagName("td"); //should now create an array that has all of the cells in it.
-   
-    for(var i = 0; i < numCells; ++i){
-        
-        playerCells[i].onclick = function(){
-            var col = this.cellIndex;               //These two lines of code work, even though the auto finisher didnt pick up 
-            var row = this.parentNode.rowIndex;     // the names of cellIndex and rowIndex.
-            clickBait(row, col, 0);
-        }
-        playerCells[i].onmouseover = function(){
-            var col = this.cellIndex;
-            var row = this.parentNode.rowIndex;
-            hoverMulti(row, col);
+                        
+                    }
+                }
+            }
         }
     }
 }
 
 //This is the function that gets called when a player clicks on a gamegrid
+//This is going to be the original onclick modifier, it will only work till the player is done placing
+//pieces, then it will switch to the other one to handle targeting
+//What if we just have an if statement
+//if player (time) == 0, the player has not placed piecs yet
+//player == 1, player has placed pieces and is now doing targeting
 function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 is computer
     if(player == 1){ //computer side
     var side = document.getElementById("Computer"); //get the player div
@@ -198,7 +196,9 @@ function btnInit(){
         
         var alert = document.getElementById("alert");
         alert.innerHTML = "<h2>Please place your pieces</h2>";
+        alert.innerHTML = "<h2>Select a grid box to place your pieces</h2>";
 
+        //INSERT FUNCTION HERE TO HANDLE THE PLACEMENT OF PIECES
         
         document.getElementById("login").innerHTML = "";
 
@@ -349,11 +349,34 @@ function hoverMulti(row, col){
 }
 
 
+//function that is going handle placement of pieces
+function piecePlace(){
+    var counter = 5; //this is the amount of pieces that their are
+    while (counter >= 0){
+        //Get the grid coordinate that the player inputs
+        //then check that the coordinate, as well as the X amount in the orientation is valid
+        //Then change all of the blocks to black for the ship place
+        
+
+
+
+        --counter;
+    }
+}
+
+
+//function to get the coordinates of the place that is clicked
+
 
 //called functions section
 //These are the only functions that are called when the game originally starts
 clearClick();
 submitClick();
 clearLocalStorage();
+makeGridClick(0);
 
 
+
+//        computerCells[i].onclick =  function(){
+//            var col = this.cellIndex;
+//            var row = this.parentNode.rowIndex;
