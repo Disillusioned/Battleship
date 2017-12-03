@@ -1,6 +1,4 @@
-//TODO: Create a function to let the player place pieces
-
-
+//CREATION FUNCTIONS:
 //creates the player grid
 function createPlayerTable(){
 var tr = 10,
@@ -93,6 +91,16 @@ var doc = document.getElementById("Computer");
 doc.innerHTML = createComputerTable();
 }
 
+
+
+
+
+
+
+
+
+
+//INIT FUNCTIONS:
 var counter = 5; // This will be the counter used when placing pieces
 //Function make all cells in the tables clickable
 function makeGridClick(time){  
@@ -122,60 +130,6 @@ function makeGridClick(time){
     }
 }
 
-//This is the function that gets called when a player clicks on a gamegrid
-//This is going to be the original onclick modifier, it will only work till the player is done placing
-//pieces, then it will switch to the other one to handle targeting
-//What if we just have an if statement
-//if player (time) == 0, the player has not placed piecs yet
-//player == 1, player has placed pieces and is now doing targeting
-function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 is computer
-    if(player == 1){ //computer side
-    var side = document.getElementById("Computer"); //get the player div
-    var grid = side.getElementsByTagName("table"); //get the the table in the player div
-    var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
-    
-    //Now check if its a hit or a miss.
-        
-    if(getSquarePiece(r, column, 1) == true)//It was a piece
-    {
-        //It was a hit
-        //change the piece to say it has been hit (prevTargeted)
-        //place the graphic of a hit
-        cell.innerHTML = "<img src=hit.png alt=hit>";
-        compBoard[r][col].prevTargeted = true;
-    }
-    else{
-        //It was a miss
-        //change the grid to say that it has been targeted already
-        //place the miss graphic
-        cell.innerHTML = "<img src=miss.png alt=miss>";
-        compBoard[r][col] = 1;
-    }
-    
-    }
-    else if(player == 0){
-    var side = document.getElementById("Player"); //get the player div
-    var grid = side.getElementsByTagName("table"); //get the the table in the player div
-    var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
-    
-    if(getSquarePiece(r,column, 0) == true)//player piece
-    {
-        cell.innerHTML = "<img src=hit.png alt=hit>";
-        playerBoard[r][col].prevTargeted = true;
-    }
-    else{
-        //It was a miss
-        cell.innerHTML = "<img src=miss.png alt=miss>";
-        playerBoard[r][col] == 1;
-        }
-    
-    //Now need to display text of where the person clicked, for assignment 4
-    var putText = document.getElementById("PlayerText");
-    putText.innerHTML = "<p>You clicked row " + r + " column " + column +".</p>";
-    
-    }
-}
-
 //initializes the buttons on the page ( RESET AND PLAY )
 function btnInit(){
     var btn = document.getElementById("Play");
@@ -192,6 +146,8 @@ function btnInit(){
         placeHTMLComp();
         
         //This makes both of the grids clickable
+        //parameter for this is 0, because its the first time its being run
+        //allows pieces to be placed
         makeGridClick();
         
         var alert = document.getElementById("alert");
@@ -204,32 +160,6 @@ function btnInit(){
 
     }
 }
-
-
-
-
-
-
-function hoverMulti(row, col){
-    var playerArea = document.getElementById("Player");
-    var playTable = playerArea.getElementsByTagName("table"); // this should get the table from the Player Area
-    
-    var selectedPiece = document.getElementById("pieceSelector");
-    if(document.getElementById("radio1").checked){
-        var orientation = 0; // horizontal selected
-    }
-    else if (document.getElementById("radio2").checked){
-        var orientation = 1; //vertical selected
-    }
-
-    //need a way to access the column and row that we are hovering over, should do it the same way as the onclick event 
-    //so what I can do is get the column and row using this keyword
-    //then pass those into this function inside of the onblur function
-
-    playTable[0].rows[row].cells[col].style.backgroundColor = "grey";
-
-}
-
 
 //function that is going handle placement of pieces
 function piecePlace(){
@@ -247,11 +177,10 @@ function piecePlace(){
 }
 
 
-//function to get the coordinates of the place that is clicked
 
 
 
-//Actual functions being called section
+//CALLED FUNCTIONS:
 btnInit();
 
 
@@ -416,3 +345,78 @@ btnInit();
 //            var col = this.cellIndex;
 //            var row = this.parentNode.rowIndex;
 
+
+// function hoverMulti(row, col){
+//     var playerArea = document.getElementById("Player");
+//     var playTable = playerArea.getElementsByTagName("table"); // this should get the table from the Player Area
+    
+//     var selectedPiece = document.getElementById("pieceSelector");
+//     if(document.getElementById("radio1").checked){
+//         var orientation = 0; // horizontal selected
+//     }
+//     else if (document.getElementById("radio2").checked){
+//         var orientation = 1; //vertical selected
+//     }
+
+//     //need a way to access the column and row that we are hovering over, should do it the same way as the onclick event 
+//     //so what I can do is get the column and row using this keyword
+//     //then pass those into this function inside of the onblur function
+
+//     playTable[0].rows[row].cells[col].style.backgroundColor = "grey";
+
+// }
+
+
+// //This is the function that gets called when a player clicks on a gamegrid
+// //This is going to be the original onclick modifier, it will only work till the player is done placing
+// //pieces, then it will switch to the other one to handle targeting
+// //What if we just have an if statement
+// //if player (time) == 0, the player has not placed piecs yet
+// //player == 1, player has placed pieces and is now doing targeting
+// function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 is computer
+//     if(player == 1){ //computer side
+//     var side = document.getElementById("Computer"); //get the player div
+//     var grid = side.getElementsByTagName("table"); //get the the table in the player div
+//     var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
+    
+//     //Now check if its a hit or a miss.
+        
+//     if(getSquarePiece(r, column, 1) == true)//It was a piece
+//     {
+//         //It was a hit
+//         //change the piece to say it has been hit (prevTargeted)
+//         //place the graphic of a hit
+//         cell.innerHTML = "<img src=hit.png alt=hit>";
+//         compBoard[r][col].prevTargeted = true;
+//     }
+//     else{
+//         //It was a miss
+//         //change the grid to say that it has been targeted already
+//         //place the miss graphic
+//         cell.innerHTML = "<img src=miss.png alt=miss>";
+//         compBoard[r][col] = 1;
+//     }
+    
+//     }
+//     else if(player == 0){
+//     var side = document.getElementById("Player"); //get the player div
+//     var grid = side.getElementsByTagName("table"); //get the the table in the player div
+//     var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
+    
+//     if(getSquarePiece(r,column, 0) == true)//player piece
+//     {
+//         cell.innerHTML = "<img src=hit.png alt=hit>";
+//         playerBoard[r][col].prevTargeted = true;
+//     }
+//     else{
+//         //It was a miss
+//         cell.innerHTML = "<img src=miss.png alt=miss>";
+//         playerBoard[r][col] == 1;
+//         }
+    
+//     //Now need to display text of where the person clicked, for assignment 4
+//     var putText = document.getElementById("PlayerText");
+//     putText.innerHTML = "<p>You clicked row " + r + " column " + column +".</p>";
+    
+//     }
+// }
