@@ -199,17 +199,9 @@ function btnInit(){
         alert.innerHTML = "<h2>Select a grid box to place your pieces</h2>";
 
         //INSERT FUNCTION HERE TO HANDLE THE PLACEMENT OF PIECES
-        
-        document.getElementById("login").innerHTML = "";
-
         //HERE WE WILL ASK THE PLAYERS TO PLACE THE PIECES..
         //TODO: Move all of this to another function, then reference the function here
 
-    }
-    
-    var rst = document.getElementById("reset");
-    rst.onclick = function(){
-        window.alert("Trying to reset?");
     }
 }
 
@@ -361,8 +353,13 @@ function piecePlace(){
 //called functions section
 //These are the only functions that are called when the game originally starts
 submitClick();
+
 clearLocalStorage();
 makeGridClick(0);
+
+
+//Actual functions being called section
+btnInit();
 
 
 
