@@ -205,109 +205,9 @@ function btnInit(){
     }
 }
 
-//init the text box on the page for testing
-function txtInit(){
-    var txtBox = document.getElementById("test");
-    txtBox.onchange = function(){
-    var txt = document.getElementById("textboxtext");
-    txt.innerHTML = "<p>" + txtBox.value + "</p>";
-    }
-}
-
-//init the selection box on the page for testing.  
-function selectInit(){
-    var select = document.getElementById("pieceSelector");
-    select.onchange = function(){
-        var txt = document.getElementById("selectText");
-        txt.innerHTML = "<p>" + select.value.toUpperCase() + "</p>";
-    }
-}
 
 
 
-//The Functions here are necessary for page startup
-function submitClick()
-{
-    var submit = document.getElementById("Submit");
-    submit.onclick = function(){       
-        
-        //get data to pass to the POST request
-        var username = document.getElementById("Username").value;
-        var password = document.getElementById("password").value;
-        var data = "userName="+username+"&password="+password;
-        
-        //create a new XHR
-        var getReq = new XMLHttpRequest();
-        
-        //Open the connection async
-        getReq.open("POST", "http://universe.tc.uvu.edu/cs2550/assignments/PasswordCheck/check.php", true);
-        
-        //set the loading screen
-        var div = document.getElementById("test");
-        div.innerHTML = "<p>Loading...</p>";
-        
-        getReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        
-        getReq.onreadystatechange = function(){
-            //Only really care if it comes back and it worked, if it didnt it just wont do anything
-            if(getReq.readyState == 4 && getReq.status == 200){
-                
-                //if the result was valid...
-                var valid = getReq.responseText;
-                valid = JSON.parse(valid);
-                if(valid.result == "valid"){
-                    
-                    
-                    //Then load the page:
-                    //This one initializes and puts the divs and placeholders for the future grids on the screen
-                    initView();
-                    
-
-                    btnInit();
-                    txtInit();
-                    selectInit();
-                    
-                    localStorage.setItem('login', JSON.stringify(valid));
-                    
-                    //this should give me the object back from the localstorage
-                    var timestamp = JSON.parse(localStorage.getItem('login'));
-                    var userName = timestamp.userName;
-                    var time = timestamp.timestamp;
-                
-                    var div = document.getElementById("test");
-                    div.innerHTML = "<p>" + username + " logged in at "+ time + "</p>";
-                    
-                    var pleaseText = document.getElementById("please");
-                    pleaseText.innerHTML = "";
-                    
-                    
-                }
-                else if(valid.result == "invalid"){
-                    var div = document.getElementById("test");
-                    div.innerHTML = "<p>Invalid Login. Please try again.</p>";
-                    
-                    var playArea = document.getElementById("playArea");
-                    playArea.innerHTML = "";
-                }
-            } 
-        }
-        //actually send the username and password to the server
-        getReq.send(data);
-    }
-}
-
-
-function clearLocalStorage(){
-    var clearStorage = document.getElementById("clearLocalStorage");
-    clearStorage.onclick = function(){
-        console.log(localStorage.getItem('login')); //shows the login object before being deleted
-        localStorage.clear();
-        console.log(localStorage.getItem('login')); //shows the login object is no longer there
-        
-        var div = document.getElementById("test");
-        div.innerHTML = "<p> Local Storage Cleared </p>";
-    }
-}
 
 
 function hoverMulti(row, col){
@@ -350,22 +250,37 @@ function piecePlace(){
 //function to get the coordinates of the place that is clicked
 
 
-//called functions section
-//These are the only functions that are called when the game originally starts
-submitClick();
-
-clearLocalStorage();
-makeGridClick(0);
-
 
 //Actual functions being called section
 btnInit();
 
 
 
-//        computerCells[i].onclick =  function(){
-//            var col = this.cellIndex;
-//            var row = this.parentNode.rowIndex;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -387,3 +302,117 @@ btnInit();
 //         password.value = "";
 //     }
 // }
+
+
+// //init the text box on the page for testing
+// function txtInit(){
+//     var txtBox = document.getElementById("test");
+//     txtBox.onchange = function(){
+//     var txt = document.getElementById("textboxtext");
+//     txt.innerHTML = "<p>" + txtBox.value + "</p>";
+//     }
+// }
+
+// //init the selection box on the page for testing.  
+// function selectInit(){
+//     var select = document.getElementById("pieceSelector");
+//     select.onchange = function(){
+//         var txt = document.getElementById("selectText");
+//         txt.innerHTML = "<p>" + select.value.toUpperCase() + "</p>";
+//     }
+// }
+
+
+
+// //The Functions here are necessary for page startup
+// function submitClick()
+// {
+//     var submit = document.getElementById("Submit");
+//     submit.onclick = function(){       
+        
+//         //get data to pass to the POST request
+//         var username = document.getElementById("Username").value;
+//         var password = document.getElementById("password").value;
+//         var data = "userName="+username+"&password="+password;
+        
+//         //create a new XHR
+//         var getReq = new XMLHttpRequest();
+        
+//         //Open the connection async
+//         getReq.open("POST", "http://universe.tc.uvu.edu/cs2550/assignments/PasswordCheck/check.php", true);
+        
+//         //set the loading screen
+//         var div = document.getElementById("test");
+//         div.innerHTML = "<p>Loading...</p>";
+        
+//         getReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+//         getReq.onreadystatechange = function(){
+//             //Only really care if it comes back and it worked, if it didnt it just wont do anything
+//             if(getReq.readyState == 4 && getReq.status == 200){
+                
+//                 //if the result was valid...
+//                 var valid = getReq.responseText;
+//                 valid = JSON.parse(valid);
+//                 if(valid.result == "valid"){
+                    
+                    
+//                     //Then load the page:
+//                     //This one initializes and puts the divs and placeholders for the future grids on the screen
+//                     initView();
+                    
+
+//                     btnInit();
+//                     txtInit();
+//                     selectInit();
+                    
+//                     localStorage.setItem('login', JSON.stringify(valid));
+                    
+//                     //this should give me the object back from the localstorage
+//                     var timestamp = JSON.parse(localStorage.getItem('login'));
+//                     var userName = timestamp.userName;
+//                     var time = timestamp.timestamp;
+                
+//                     var div = document.getElementById("test");
+//                     div.innerHTML = "<p>" + username + " logged in at "+ time + "</p>";
+                    
+//                     var pleaseText = document.getElementById("please");
+//                     pleaseText.innerHTML = "";
+                    
+                    
+//                 }
+//                 else if(valid.result == "invalid"){
+//                     var div = document.getElementById("test");
+//                     div.innerHTML = "<p>Invalid Login. Please try again.</p>";
+                    
+//                     var playArea = document.getElementById("playArea");
+//                     playArea.innerHTML = "";
+//                 }
+//             } 
+//         }
+//         //actually send the username and password to the server
+//         getReq.send(data);
+//     }
+// }
+
+
+
+// function clearLocalStorage(){
+//     var clearStorage = document.getElementById("clearLocalStorage");
+//     clearStorage.onclick = function(){
+//         console.log(localStorage.getItem('login')); //shows the login object before being deleted
+//         localStorage.clear();
+//         console.log(localStorage.getItem('login')); //shows the login object is no longer there
+        
+//         var div = document.getElementById("test");
+//         div.innerHTML = "<p> Local Storage Cleared </p>";
+//     }
+// }
+
+
+
+
+//        computerCells[i].onclick =  function(){
+//            var col = this.cellIndex;
+//            var row = this.parentNode.rowIndex;
+
