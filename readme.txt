@@ -1,4 +1,8 @@
-JSON is used on the login page in a small example of how the JSON files can be parsed 
-we use it to populate the small 3x3 grids with different information for hits (fire), misses(splash of water), and pieces
-(so far just black squares).  
-It is also used to display the turn at the last "save" state, and the "health" (amount of hits necessary to win) of both players.  
+Necessary files for the project to run:
+view.js (handles all view type things, things the player will see, as well as game init)
+game_state.js (handles all storage of game state things like pieces and hits/misses
+html.html (the actual html file that all of this runs in)
+style.css (handles all style of the html page)
+
+everything else is non essential/unecessary/can be deleted
+
