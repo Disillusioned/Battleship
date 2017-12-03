@@ -148,8 +148,10 @@ function btnInit(){
         //This makes both of the grids clickable
         //parameter for this is 0, because its the first time its being run
         //allows pieces to be placed
-        makeGridClick();
+        makeGridClick(0);
         
+
+
         var alert = document.getElementById("alert");
         alert.innerHTML = "<h2>Please place your pieces</h2>";
         alert.innerHTML = "<h2>Select a grid box to place your pieces</h2>";
@@ -159,6 +161,9 @@ function btnInit(){
         //TODO: Move all of this to another function, then reference the function here
 
     }
+
+    var playArea = document.getElementById("playArea");
+    playArea.removeChild(btn);
 }
 
 //function that is going handle placement of pieces
