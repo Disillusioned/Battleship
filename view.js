@@ -128,8 +128,9 @@ function makeGridClick(time){
                                 //need to shade in the boxes for the piece
                                 for(var x = 0; x < size; ++x){
                                     table[0].rows[row].cells[col + x].setAttribute("bgcolor", "black");
-                                    insertPiece(row, col, size, orient, counter);
                                 }
+                                insertPiece(row, col, size, orient, counter);
+                                --counter;
                             }
                             else{
                                 alert();
@@ -140,6 +141,8 @@ function makeGridClick(time){
                                 for(var x = 0; x < size; ++x){
                                     table[0].rows[row + x].cells[col].setAttribute("bgcolor", "black");
                                 }
+                                insertPiece(row, col, size, orient, counter);
+                                --counter;
                             }
                             else{
                                 alert();
