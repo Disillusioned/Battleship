@@ -155,6 +155,23 @@ function checkVert(row, col, height){
 }
 
 
+//This is the function called to insert pieces into the board
+//Size is the size of the piece, orient is orientation, and type is the piece number 1-5 
+//as numbered in the piece CTOR
+function insertPiece(row, col, size, orient, type){
+    if(orient == "horizontal"){
+        for(var i = 0; i < size; ++i){
+            playerBoard[row][col + x] = piece(type, orient);
+        }
+    }
+    else{
+        for(var i = 0; i < size; ++i){
+            playerBoard[row + x][col] = piece(type, orient);
+        }
+    }
+}
+
+
 
 
 

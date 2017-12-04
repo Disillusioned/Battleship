@@ -128,10 +128,11 @@ function makeGridClick(time){
                                 //need to shade in the boxes for the piece
                                 for(var x = 0; x < size; ++x){
                                     table[0].rows[row].cells[col + x].setAttribute("bgcolor", "black");
+                                    insertPiece(row, col, size, orient, counter);
                                 }
                             }
                             else{
-                                window.alert("Illegal placement, please try again.");
+                                alert();
                             }
                         }
                         else{ //its vertical
@@ -139,6 +140,9 @@ function makeGridClick(time){
                                 for(var x = 0; x < size; ++x){
                                     table[0].rows[row + x].cells[col].setAttribute("bgcolor", "black");
                                 }
+                            }
+                            else{
+                                alert();
                             }
                         }
                         
@@ -177,6 +181,10 @@ function btnInit(){
         alert.innerHTML = "<h2>Select a grid box to place your pieces</h2>";
 
     }
+}
+
+function alert(){
+    window.alert("Illegal placement, please try again");
 }
 
 
