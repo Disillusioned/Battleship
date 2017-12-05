@@ -101,6 +101,7 @@ doc.innerHTML = createComputerTable();
 
 
 //INIT FUNCTIONS:
+
 var counter = 5; // This will be the counter used when placing pieces
 //Function make all cells in the tables clickable
 function makeGridClick(time) {
@@ -126,7 +127,7 @@ function makeGridClick(time) {
                             if (checkHor(row, col, size)) { // if checkHor comes back true this runs
                                 //need to shade in the boxes for the piece
                                 for (var x = 0; x < size; ++x) {
-                                    table[0].rows[row].cells[col + x].setAttribute("bgcolor", "black");
+                                    table[0].rows[row].cells[col + x].setAttribute("bgcolor", "0DAB50");
                                 }
                                 insertPiece(row, col, size, orient, counter);
                                 --counter;
@@ -138,7 +139,7 @@ function makeGridClick(time) {
                         else { //its vertical
                             if (checkVert(row, col, size)) {
                                 for (var x = 0; x < size; ++x) {
-                                    table[0].rows[row + x].cells[col].setAttribute("bgcolor", "black");
+                                    table[0].rows[row + x].cells[col].setAttribute("bgcolor", "0DAB50");
                                 }
                                 insertPiece(row, col, size, orient, counter);
                                 --counter;
@@ -238,11 +239,36 @@ function makeGridClick(time) {
                             }
                         }
                     }
+                    else if(counter == 0){ // This will be the code that then does all of the checking for pieces after play has started
+
+                    }
                 }
             }
         }
     }
 }
+
+
+//This was taken from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+//Search for RNG Javascript
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+}
+
+var compPiece = 5;
+function compPlace(){
+    while(compPiece >= 0){
+        //1.Generate Random Numbers for "Click"
+        var row = getRandomIntInclusive(0,9);
+        var col = getRandomIntInclusive(0,9);
+        var orient = getRandomIntInclusive(0,1);
+        console.log(orient);
+    }
+}
+
+compPlace();
 
 
 //initializes the buttons on the page ( RESET AND PLAY )
@@ -287,12 +313,12 @@ function drawPiece(row, col, size, orient, tabl){
     var table = tabl;
     if(orient == "horizontal"){
         for(var x = 0; x < size; ++x){
-            table[0].rows[row].cells[col+x].setAttribute("bgcolor", "black");
+            table[0].rows[row].cells[col+x].setAttribute("bgcolor", "0DAB50");
         }
     }
     else{
         for(var x = 0; x < size; ++x){
-            table[0].rows[row+x].cells[col].setAttribute("bgcolor", "black");
+            table[0].rows[row+x].cells[col].setAttribute("bgcolor", "0DAB50");
         }
     }
 }
