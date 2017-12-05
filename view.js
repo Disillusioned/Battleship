@@ -99,7 +99,7 @@ doc.innerHTML = createComputerTable();
 
 
 
-
+var illegal = "Illegal placement, please try again";
 //INIT FUNCTIONS:
 
 var counter = 5; // This will be the counter used when placing pieces
@@ -133,7 +133,7 @@ function makeGridClick(time) {
                                 --counter;
                             }
                             else {
-                                alert();
+                                window.alert(illegal);
                             }
                         }
                         else { //its vertical
@@ -145,7 +145,7 @@ function makeGridClick(time) {
                                 --counter;
                             }
                             else {
-                                alert();
+                                window.alert(illegal);
                             }
                         }
 
@@ -159,7 +159,7 @@ function makeGridClick(time) {
                                 --counter;
                             }
                             else {
-                                alert();
+                                window.alert(illegal);
                             }
                         }
                         else { //its vertical
@@ -179,7 +179,7 @@ function makeGridClick(time) {
                                 --counter
                             }
                             else {
-                                alert();
+                                window.alert(illegal);
                             }
                         }
                         else { // its Vertical
@@ -189,7 +189,7 @@ function makeGridClick(time) {
                                 --counter
                             }
                             else {
-                                alert();
+                                window.alert(illegal);
                             }
                         }
                     }
@@ -202,7 +202,7 @@ function makeGridClick(time) {
                                 --counter
                             }
                             else {
-                                alert();
+                                window.alert(illegal);
                             }
                         }
                         else{//Its vertical
@@ -212,7 +212,7 @@ function makeGridClick(time) {
                                 --counter
                             }
                             else {
-                                alert();
+                                window.alert(illegal);
                             }
                         }
                     }
@@ -225,7 +225,7 @@ function makeGridClick(time) {
                                 --counter
                             }
                             else {
-                                alert();
+                                window.alert(illegal);
                             }
                         }
                         else{//Its vertical
@@ -235,7 +235,7 @@ function makeGridClick(time) {
                                 --counter
                             }
                             else {
-                                alert();
+                                window.alert(illegal);
                             }
                         }
                     }
@@ -258,17 +258,44 @@ function getRandomIntInclusive(min, max) {
 }
 
 var compPiece = 5;
-function compPlace(){
+function compPlace(){ // Function is currently pseudo infinite looping....need to fix.  
     while(compPiece >= 0){
         //1.Generate Random Numbers for "Click"
         var row = getRandomIntInclusive(0,9);
         var col = getRandomIntInclusive(0,9);
-        var orient = getRandomIntInclusive(0,1);
-        console.log(orient);
+        var orient = setOrient(getRandomIntInclusive(0,1));
+
+
+        if(checkComp(row,col,pieceSize(compPiece), orient)){ //if this is a legal space
+            insertComp(row, col, pieceSize(compPiece), orient, compPiece);
+            --compPiece;
+        }
     }
 }
 
-compPlace();
+function pieceSize(counterNum){
+    if(counterNum == 5){
+        return 5;
+    }
+    else if(counterNum == 4){
+        return 4;
+    }
+    else if(counterNum == 3 || counterNum == 2){
+        return 3;
+    }
+    else if(counterNum == 1){
+        return 2;
+    }
+}
+
+function setOrient(num){
+    if(num == 0){
+        return "horizontal";
+    }
+    else if(num == 1){
+        return "vertical";
+    }
+}
 
 
 //initializes the buttons on the page ( RESET AND PLAY )
@@ -300,9 +327,9 @@ function btnInit(){
     }
 }
 
-function alert(){
-    window.alert("Illegal placement, please try again");
-}
+// function alert(){
+//     window.alert("Illegal placement, please try again");
+// }
 
 function getOrient(){
     var orient = document.getElementById("orienSelector").value;
@@ -330,6 +357,7 @@ function drawPiece(row, col, size, orient, tabl){
 
 //CALLED FUNCTIONS:
 btnInit();
+compPlace();
 
 
 

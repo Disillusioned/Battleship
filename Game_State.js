@@ -128,12 +128,15 @@ function prevTargeted(row, col, player){
 function checkHor(row, col, length){
     var legal = false;
     for(var i = 0; i < length; ++i){
+        if(col + i>9){
+            return legal = false;
+        }
         if(playerBoard[row][col + i] == 0){
             legal = true;
         }
         else {
             legal = false;
-            break;
+            return legal;
         }    
     }
 
@@ -143,14 +146,54 @@ function checkHor(row, col, length){
 function checkVert(row, col, height){
     var legal = false;
     for(var i = 0; i < height; ++i){
+        if(row + i > 9){
+            return legal=false;
+        }
         if(playerBoard[row + i][col] == 0){
             legal = true;
         }
         else{
             legal = false;
-            break;
+            return legal;
         }
     }
+    return legal;
+}
+
+
+function checkComp(row, col, size, orient){
+    var legal = false;
+    if(orient == "horizontal"){
+        for(var i = 0; i <size; ++i){
+            if(col + i > 9){
+                legal = false;
+                return legal;
+            }
+            if(compBoard[row][col+i] == 0){
+                legal = true;
+            }
+            else{
+                legal = false;
+                return legal;
+            }
+        }
+    }
+    else{
+        for(var i = 0; i <size; ++i){
+            if(row + i > 9){ // this is the case where the piece will go off the board
+                legal = false;
+                return legal;
+            }
+            if(compBoard[row+i][col] == 0){
+                legal = true;
+            }
+            else{
+                legal = false;
+                return legal;
+            }
+        }
+    }
+
     return legal;
 }
 
@@ -167,6 +210,19 @@ function insertPiece(row, col, size, orient, type){
     else{
         for(var x = 0; x < size; ++x){
             playerBoard[row + x][col] = new piece(type, orient);
+        }
+    }
+}
+
+function insertComp(row, col, size, orient, type){
+    if(orient == "horizontal"){
+        for(var x = 0; x < size; ++x){
+            compBoard[row][col + x] = new piece(type, orient);
+        }
+    }
+    else{
+        for(var x = 0; x < size; ++x){
+            compBoard[row + x][col] = new piece(type, orient);
         }
     }
 }
