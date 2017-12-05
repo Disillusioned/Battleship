@@ -160,13 +160,13 @@ function checkVert(row, col, height){
 //as numbered in the piece CTOR
 function insertPiece(row, col, size, orient, type){
     if(orient == "horizontal"){
-        for(var i = 0; i < size; ++i){
-            playerBoard[row][col + x] = piece(type, orient);
+        for(var x = 0; x < size; ++x){
+            playerBoard[row][col + x] = new piece(type, orient);
         }
     }
     else{
-        for(var i = 0; i < size; ++i){
-            playerBoard[row + x][col] = piece(type, orient);
+        for(var x = 0; x < size; ++x){
+            playerBoard[row + x][col] = new piece(type, orient);
         }
     }
 }

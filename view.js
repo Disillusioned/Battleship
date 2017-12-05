@@ -103,59 +103,147 @@ doc.innerHTML = createComputerTable();
 //INIT FUNCTIONS:
 var counter = 5; // This will be the counter used when placing pieces
 //Function make all cells in the tables clickable
-function makeGridClick(time){  
-    if(time == 0){ //The first time this gets run, to let player put pieces on board
+function makeGridClick(time) {
+    if (time == 0) { //The first time this gets run, to let player put pieces on board
         var playerArea = document.getElementById("Player");
         var table = playerArea.getElementsByTagName("table");
         var numRows = 10;
         var numCol = 10;
-        for(var i =0; i < numRows; ++i){
-            for(var j = 0; j < numCol; ++j){
-            table[0].rows[i].cells[j].onclick = function(){
-                var col = this.cellIndex;
-                var row = this.parentNode.rowIndex;
-                var orient = document.getElementById("orienSelector").value; // This should come back horizontal or vertical
-                while(counter <= 5){ // it doesnt matter which cell is calling into this while loop because counter is global it will always modify the same variable
-                    if(counter == 5){ // placing aircraft carrier (dont have to check is this place is already taken by another piece)
+        for (var i = 0; i < numRows; ++i) {
+            for (var j = 0; j < numCol; ++j) {
+                table[0].rows[i].cells[j].onclick = function () {
+                    var col = this.cellIndex;
+                    var row = this.parentNode.rowIndex;
+                    var orient = getOrient(); // This should come back horizontal or vertical
+                    if (counter == 5) { // placing aircraft carrier (dont have to check is this place is already taken by another piece)
                         //check orientation 
                         //check size of the piece (usually the counter number, but will change later)
                         var size = counter; //This is the length of the piece
-                        
+
                         //if else statement for orientation 
                         //then can do math to see if all grid segments are legal
-                        if(orient == "horizontal"){
-                            if(checkHor(row, col, size)){ // if checkHor comes back true this runs
+                        if (orient == "horizontal") {
+                            if (checkHor(row, col, size)) { // if checkHor comes back true this runs
                                 //need to shade in the boxes for the piece
-                                for(var x = 0; x < size; ++x){
+                                for (var x = 0; x < size; ++x) {
                                     table[0].rows[row].cells[col + x].setAttribute("bgcolor", "black");
                                 }
                                 insertPiece(row, col, size, orient, counter);
                                 --counter;
                             }
-                            else{
+                            else {
                                 alert();
                             }
                         }
-                        else{ //its vertical
-                            if(checkVert(row, col, size)){
-                                for(var x = 0; x < size; ++x){
+                        else { //its vertical
+                            if (checkVert(row, col, size)) {
+                                for (var x = 0; x < size; ++x) {
                                     table[0].rows[row + x].cells[col].setAttribute("bgcolor", "black");
                                 }
                                 insertPiece(row, col, size, orient, counter);
                                 --counter;
                             }
-                            else{
+                            else {
                                 alert();
                             }
                         }
-                        
+
+                    }
+                    else if (counter == 4) {
+                        var size = counter;
+                        if (orient == "horizontal") {
+                            if (checkHor(row, col, size)) {
+                                drawPiece(row, col, size, orient, table);
+                                insertPiece(row, col, size, orient, counter);
+                                --counter;
+                            }
+                            else {
+                                alert();
+                            }
+                        }
+                        else { //its vertical
+                            if (checkVert(row, col, size)) {
+                                drawPiece(row, col, size, orient, table);
+                                insertPiece(row, col, size, orient, counter);
+                                --counter;
+                            }
+                        }
+                    }
+                    else if (counter == 3) {
+                        var size = counter;
+                        if (orient == "horizontal") {
+                            if (checkHor(row, col, size)) {
+                                drawPiece(row, col, size, orient, table);
+                                insertPiece(row, col, size, orient, counter);
+                                --counter
+                            }
+                            else {
+                                alert();
+                            }
+                        }
+                        else { // its Vertical
+                            if (checkVert(row, col, size)) {
+                                drawPiece(row, col, size, orient, table);
+                                insertPiece(row, col, size, orient, counter);
+                                --counter
+                            }
+                            else {
+                                alert();
+                            }
+                        }
+                    }
+                    else if (counter == 2) { //Now its the second size three piece so we have to change some variables to match that
+                        var size = counter + 1;
+                        if (orient == "horizontal") {
+                            if (checkHor(row, col, size)) {
+                                drawPiece(row, col, size, orient, table);
+                                insertPiece(row, col, size, orient, counter);
+                                --counter
+                            }
+                            else {
+                                alert();
+                            }
+                        }
+                        else{//Its vertical
+                            if (checkVert(row, col, size)) {
+                                drawPiece(row, col, size, orient, table);
+                                insertPiece(row, col, size, orient, counter);
+                                --counter
+                            }
+                            else {
+                                alert();
+                            }
+                        }
+                    }
+                    else if(counter == 1){
+                        var size = counter + 1;
+                        if (orient == "horizontal") {
+                            if (checkHor(row, col, size)) {
+                                drawPiece(row, col, size, orient, table);
+                                insertPiece(row, col, size, orient, counter);
+                                --counter
+                            }
+                            else {
+                                alert();
+                            }
+                        }
+                        else{//Its vertical
+                            if (checkVert(row, col, size)) {
+                                drawPiece(row, col, size, orient, table);
+                                insertPiece(row, col, size, orient, counter);
+                                --counter
+                            }
+                            else {
+                                alert();
+                            }
+                        }
                     }
                 }
-            }
             }
         }
     }
 }
+
 
 //initializes the buttons on the page ( RESET AND PLAY )
 function btnInit(){
@@ -188,6 +276,25 @@ function btnInit(){
 
 function alert(){
     window.alert("Illegal placement, please try again");
+}
+
+function getOrient(){
+    var orient = document.getElementById("orienSelector").value;
+    return orient;
+}
+
+function drawPiece(row, col, size, orient, tabl){
+    var table = tabl;
+    if(orient == "horizontal"){
+        for(var x = 0; x < size; ++x){
+            table[0].rows[row].cells[col+x].setAttribute("bgcolor", "black");
+        }
+    }
+    else{
+        for(var x = 0; x < size; ++x){
+            table[0].rows[row+x].cells[col].setAttribute("bgcolor", "black");
+        }
+    }
 }
 
 
