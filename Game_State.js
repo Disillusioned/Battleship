@@ -54,7 +54,7 @@ function piece(type, orien){
     }
     this.orientation = orien; //0 = horizontal, 1 = vertical
     this.prevTargeted == false; //this can be modified to true later on after it has been hit by the computer
-
+    this.isPiece == true;
     //Type to Name def
     //5 -- Carrier
     //4 -- Battleship
@@ -129,6 +129,7 @@ function prevTargeted(row, col, player){
 
 function checkHor(row, col, length){
     var legal = false;
+    --row; // have to decrement by one because of the way that the number row show up....
     for(var i = 0; i < length; ++i){
         if(col + i>9){
             return legal = false;
@@ -147,6 +148,7 @@ function checkHor(row, col, length){
 
 function checkVert(row, col, height){
     var legal = false;
+    --row; // have to decrement by one because of the way that the number row show up....
     for(var i = 0; i < height; ++i){
         if(row + i > 9){
             return legal=false;
@@ -204,6 +206,7 @@ function checkComp(row, col, size, orient){
 //Size is the size of the piece, orient is orientation, and type is the piece number 1-5 
 //as numbered in the piece CTOR
 function insertPiece(row, col, size, orient, type){
+    --row;
     if(orient == "horizontal"){
         for(var x = 0; x < size; ++x){
             playerBoard[row][col + x] = new piece(type, orient);
@@ -235,14 +238,58 @@ function insertComp(row, col, size, orient, type){
 
 //GAMESTATE INFORMATION MODIFICATION (VIEW -> GAMESTATE)
 
-function attack
+function attack(row, col, player) {
+    if (player == 0) { //attacking the player
+        //Check if it was a hit or miss
+        if (playerBoard[row][col].isPiece == true) {
+            playerBoard[row][col].prevTargeted = true;
+            //call a function that marks it on the board
+            markHit(row, col, player);
+            --playerHealth;
+            if (playerHealth == 0) {
+                gameOver = true;
+            }
+        }
+        else {//it was a miss
+            playerBoard[row][col] = 1;
+            markMiss(row, col, player);
+        }
+    }
+    else {
+        //Check if it was a hit or miss
+        if (compBoard[row][col].isPiece == true) {
+            compBoard[row][col].prevTargeted = true;
+            //call a function that marks it on the board
+            markHit(row, col, player);
+            --compHealth;
+            if (compHealth == 0) {
+                gameOver = true;
+            }
+        }
+        else {//it was a miss
+            compBoard[row][col] = 1;
+            markMiss(row, col, player);
+        }
+    }
+}
 
 
 //GAMEPLAY FUNCTIONS
 function playBall(){
-    while(gameOver != true){
+    turnDisplay();
+    while(gameOver == false){
         if(turn == 0){ //player is 0
-
+            //wait for player to click
+            waitForClick();
+            //See where the player selects on grid
+            //validate, if good then mark if not then ask to try again
+            while(prevTargeted(gRow, gCol, 1) == true){ // the number one signifies that we are checking the computers board
+                //Alert the player that it has already been selected...
+                window.alert("Already selected, please try another grid cell");
+            }
+            attack(gRow, gCol, 1);
+            turn = 1;
+            turnDisplay();
         }
         else{ //computer turn
             //generate random numbers for a space
@@ -252,9 +299,10 @@ function playBall(){
                 row = getRandomIntInclusive(0,9);
                 col = getRandomIntInclusive(0,9);
                 attackSpace = prevTargeted(row, col, 0);
-            }while(attackSpace == false);
-
-
+            }while(attackSpace == true);
+            attack(row, col, 0);
+            turn = 0;
+            turnDisplay();
         }
     }
 }

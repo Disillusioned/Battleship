@@ -6,11 +6,11 @@ var tr = 10,
         html = "",
         numCells = 10,
         numRows = 10,
-        name = "table",
+        name = "playerTable",
         i = 0,
         j = 0;
     //create the initial table
-	html += "<table>" ;
+	html += "<table id=\"" + name + "\">" ;
     
     //this creates the numbers across the top
     html += "<tr>";
@@ -46,7 +46,7 @@ var tr = 10,
         html = "",
         numCells = 10,
         numRows = 10,
-        name = "table",
+        name = "computerTable",
         i = 0,
         j = 0;
     //create the initial table
@@ -109,7 +109,7 @@ function makeGridClick(time) {
     if (time == 0) { //The first time this gets run, to let player put pieces on board
         var playerArea = document.getElementById("Player");
         var table = playerArea.getElementsByTagName("table");
-        var numRows = 10;
+        var numRows = 11;
         var numCol = 10;
         for (var i = 0; i < numRows; ++i) {
             for (var j = 0; j < numCol; ++j) {
@@ -239,15 +239,49 @@ function makeGridClick(time) {
                                 window.alert(illegal);
                             }
                         }
+                        var alertDiv = document.getElementById("alert");
+                        alertDiv.innerHTML = "After selecting last piece, please click once more on the grid to finalize pieces and start game";
                     }
                     else if(counter == 0){ // This will be the code that then does all of the checking for pieces after play has started
                         if(compPiece == 0){
                             ready = true;
+                            if(ready == true){
+                                var turn = getRandomIntInclusive(0,1);
+                                playBall();
+                            }
                         }
                     }
                 }
             }
         }
+    }
+}
+
+var gRow, gCol;
+var prevRow, prevCol;
+function captureClick(r, c){
+    //This function holds onto the last received coordinates from a glid click that we then
+    gRow = r;
+    gCol = c;
+}
+
+function waitForClick(){
+    while(prevRow == gRow && prevCol == gCol){
+    }
+}
+
+
+function setCompClick(){
+    var compBoardHTML = document.getElementById("computerTable");
+    for(var i = 0; i < 11; ++i){ // has to be 11 to account for the extra row of row numbers
+        for(var j = 0; j < 10; ++j){
+            compBoardHTML.rows[i].cells[j].onclick = function(){
+                var r = this.parentNode.rowIndex;
+                var c = this.cellIndex;
+                captureClick(r, c);
+            }
+        }
+
     }
 }
 
@@ -301,14 +335,14 @@ function setOrient(num){
 }
 
 
-//initializes the buttons on the page ( RESET AND PLAY )
+//initializes the buttons on the page ( PLAY )
 function btnInit(){
     var btn = document.getElementById("Play");
     btn.onclick = function(){
             
         var playArea = document.getElementById("playArea");
         //This adds in the divs and necessary structs for the game area after the play button has been clicked
-        playArea.innerHTML += ('<h2>Computer Grid</h2><div id="Computer"></div><div id="ComputerText"></div><br><h2>Player Grid</h2>    <div id="Player"></div><div id="PlayerText"></div><div id="AnimationSection"><img id="aniBoat" src="aniBoat.png" alt="boat"></div>');
+        playArea.innerHTML += ('<h2>Computer Grid</h2><div id="Computer"></div><div id="ComputerText"></div><br><div id="turnArea"></div><h2>Player Grid</h2>    <div id="Player"></div><div id="PlayerText"></div>');
         
 
         
@@ -320,7 +354,7 @@ function btnInit(){
         //parameter for this is 0, because its the first time its being run
         //allows pieces to be placed
         makeGridClick(0);
-        
+        setCompClick();
 
 
         var alert = document.getElementById("alert");
@@ -329,10 +363,6 @@ function btnInit(){
 
     }
 }
-
-// function alert(){
-//     window.alert("Illegal placement, please try again");
-// }
 
 function getOrient(){
     var orient = document.getElementById("orienSelector").value;
@@ -354,6 +384,48 @@ function drawPiece(row, col, size, orient, tabl){
 }
 
 
+//Marking functions
+//This one is only for hits
+function markHit(row, col, player){
+    if(player == 0){//marking the players board
+        var board = document.getElementById("playerTable");
+        var td = board.getElementsByTagName("table");
+        board.rows[row].cells[col].setAttribute("bgcolor", "red");   
+    }
+    else{
+        var board = document.getElementById("computerTable");
+        var td = board.getElementsByTagName("table");
+        board.rows[row].cells[col].setAttribute("bgcolor", "red"); 
+    }
+}
+
+function markMiss(row,col,player){
+    if(player == 0){//marking the players board
+        var board = document.getElementById("playerTable");
+        var td = board.getElementsByTagName("table");
+        board.rows[row].cells[col].setAttribute("bgcolor", "blue");   
+    }
+    else{
+        var board = document.getElementById("computerTable");
+        var td = board.getElementsByTagName("table");
+        board.rows[row].cells[col].setAttribute("bgcolor", "blue"); 
+    }
+}
+
+function turnDisplay(){
+    var turnArea = document.getElementById("turnArea");
+    if(turn == 0){
+        turnArea.innerHTML = "Player Turn";
+    }
+    else{
+        turnArea.innerHTML = "Computer Turn";
+    }
+}
+
+
+
+
+
 
 
 
@@ -361,14 +433,9 @@ function drawPiece(row, col, size, orient, tabl){
 //CALLED FUNCTIONS:
 btnInit();
 
+
 while(compPiece > 0){
     compPlace();
-}
-
-
-if(ready == true){
-    var turn = getRandomIntInclusive(0,1);
-    playBall();
 }
 
 
