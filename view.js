@@ -278,7 +278,7 @@ function setCompClick(){
             compBoardHTML.rows[i].cells[j].onclick = function(){
                 var r = this.parentNode.rowIndex;
                 var c = this.cellIndex;
-                captureClick(r, c);
+                playBall(r, c);
             }
         }
 

@@ -275,36 +275,22 @@ function attack(row, col, player) {
 
 
 //GAMEPLAY FUNCTIONS
-function playBall(){
+function playBall(row, col) {
     turnDisplay();
-    while(gameOver == false){
-        if(turn == 0){ //player is 0
-            //wait for player to click
-            waitForClick();
-            //See where the player selects on grid
-            //validate, if good then mark if not then ask to try again
-            while(prevTargeted(gRow, gCol, 1) == true){ // the number one signifies that we are checking the computers board
-                //Alert the player that it has already been selected...
-                window.alert("Already selected, please try another grid cell");
-            }
-            attack(gRow, gCol, 1);
-            turn = 1;
-            turnDisplay();
-        }
-        else{ //computer turn
-            //generate random numbers for a space
-            var row, col;
-            var attackSpace = false;
-            do{
-                row = getRandomIntInclusive(0,9);
-                col = getRandomIntInclusive(0,9);
-                attackSpace = prevTargeted(row, col, 0);
-            }while(attackSpace == true);
-            attack(row, col, 0);
-            turn = 0;
-            turnDisplay();
-        }
-    }
+    attack(row, col, 1);
+    turn = 1;
+    turnDisplay();
+    //generate random numbers for a space
+    var arow, acol;
+    var attackSpace = false;
+    do {
+        arow = getRandomIntInclusive(0, 9);
+        acol = getRandomIntInclusive(0, 9);
+        attackSpace = prevTargeted(arow, acol, 0);
+    } while (attackSpace == true);
+    attack(arow, acol, 0);
+    turn = 0;
+    turnDisplay();
 }
 
 
