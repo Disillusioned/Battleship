@@ -100,6 +100,7 @@ doc.innerHTML = createComputerTable();
 
 
 var illegal = "Illegal placement, please try again";
+var ready = false;
 //INIT FUNCTIONS:
 
 var counter = 5; // This will be the counter used when placing pieces
@@ -240,7 +241,9 @@ function makeGridClick(time) {
                         }
                     }
                     else if(counter == 0){ // This will be the code that then does all of the checking for pieces after play has started
-
+                        if(compPiece == 0){
+                            ready = true;
+                        }
                     }
                 }
             }
@@ -259,7 +262,8 @@ function getRandomIntInclusive(min, max) {
 
 var compPiece = 5;
 function compPlace(){ // Function is currently pseudo infinite looping....need to fix.  
-    while(compPiece >= 0){
+        //For Debugging:
+        console.log("Calling compPlace for piece " + compPiece);
         //1.Generate Random Numbers for "Click"
         var row = getRandomIntInclusive(0,9);
         var col = getRandomIntInclusive(0,9);
@@ -270,7 +274,6 @@ function compPlace(){ // Function is currently pseudo infinite looping....need t
             insertComp(row, col, pieceSize(compPiece), orient, compPiece);
             --compPiece;
         }
-    }
 }
 
 function pieceSize(counterNum){
@@ -357,7 +360,16 @@ function drawPiece(row, col, size, orient, tabl){
 
 //CALLED FUNCTIONS:
 btnInit();
-compPlace();
+
+while(compPiece > 0){
+    compPlace();
+}
+
+
+if(ready == true){
+    var turn = getRandomIntInclusive(0,1);
+    playBall();
+}
 
 
 

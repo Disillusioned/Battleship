@@ -4,6 +4,8 @@ var turn = 1; //0 for player, 1 for comp
 var playerHealth =  17;
 var opponentHealth = 17;
 
+var gameOver = false;
+
 //Players gain shots as they destroy more ships, but the standard is 1
 var playerShotsRemaining = 1;
 var aiShotsRemaining = 1;
@@ -233,13 +235,27 @@ function insertComp(row, col, size, orient, type){
 
 //GAMESTATE INFORMATION MODIFICATION (VIEW -> GAMESTATE)
 
-// THIS NEEDS TO BE MODIFIED TO USE THE NEW PIECE OBJ
-function hit(column,row,player){
-    if(player == 0){
-        playerHitGrid[row][column] = 1;
-    }
-    else if(player ==1){
-        compHitGrid[row][column] = 1;
+function attack
+
+
+//GAMEPLAY FUNCTIONS
+function playBall(){
+    while(gameOver != true){
+        if(turn == 0){ //player is 0
+
+        }
+        else{ //computer turn
+            //generate random numbers for a space
+            var row, col;
+            var attackSpace = false;
+            do{
+                row = getRandomIntInclusive(0,9);
+                col = getRandomIntInclusive(0,9);
+                attackSpace = prevTargeted(row, col, 0);
+            }while(attackSpace == false);
+
+
+        }
     }
 }
 
