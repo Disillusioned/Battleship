@@ -20,7 +20,9 @@ var boardHeight = 10;
 var i = 0;
 var j = 0;
 
-
+//debugging var:
+var playerShots = 0;
+var compShots = 0;
 
 
 
@@ -29,32 +31,11 @@ var j = 0;
 
 //object ctor for game pieces.  
 //Orien is horizontal or vertical orientation
-function piece(type, orien){
+function piece(type, orien, prevTargeted, isPiece){
     this.type = type; // refer to comments at bottom for type definition
-    
-    this.sizeOf = function(){
-        if(type == 5){
-            return 5;
-        }
-        else if(type == 4){
-            return 4;
-        }
-        else if(type == 3){
-            return 3;
-        }
-        else if(type == 2){
-            return 3;
-        }
-        else if(type == 1){
-            return 2;
-        }
-        else{
-        return 0;
-        }
-    }
     this.orientation = orien; //0 = horizontal, 1 = vertical
-    this.prevTargeted == false; //this can be modified to true later on after it has been hit by the computer
-    this.isPiece == true;
+    this.prevTargeted = prevTargeted; //this can be modified to true later on after it has been hit by the computer
+    this.isPiece = isPiece;
     //Type to Name def
     //5 -- Carrier
     //4 -- Battleship
@@ -209,12 +190,12 @@ function insertPiece(row, col, size, orient, type){
     --row;
     if(orient == "horizontal"){
         for(var x = 0; x < size; ++x){
-            playerBoard[row][col + x] = new piece(type, orient);
+            playerBoard[row][col + x] = new piece(type, orient, false, true);
         }
     }
     else{
         for(var x = 0; x < size; ++x){
-            playerBoard[row + x][col] = new piece(type, orient);
+            playerBoard[row + x][col] = new piece(type, orient, false, true);
         }
     }
 }
@@ -222,12 +203,12 @@ function insertPiece(row, col, size, orient, type){
 function insertComp(row, col, size, orient, type){
     if(orient == "horizontal"){
         for(var x = 0; x < size; ++x){
-            compBoard[row][col + x] = new piece(type, orient);
+            compBoard[row][col + x] = new piece(type, orient, false, true);
         }
     }
     else{
         for(var x = 0; x < size; ++x){
-            compBoard[row + x][col] = new piece(type, orient);
+            compBoard[row + x][col] = new piece(type, orient, false, true);
         }
     }
 }
@@ -241,8 +222,8 @@ function insertComp(row, col, size, orient, type){
 function attack(row, col, player) {
     if (player == 0) { //attacking the player
         //Check if it was a hit or miss
-        if (playerBoard[row][col].isPiece == true) {
-            playerBoard[row][col].prevTargeted = true;
+        if (playerBoard[row-1][col].isPiece == true) {
+            playerBoard[row-1][col].prevTargeted = true;
             //call a function that marks it on the board
             markHit(row, col, player);
             --playerHealth;
@@ -251,23 +232,24 @@ function attack(row, col, player) {
             }
         }
         else {//it was a miss
-            playerBoard[row][col] = 1;
+            playerBoard[row-1][col] = 1;
             markMiss(row, col, player);
         }
     }
     else {
         //Check if it was a hit or miss
-        if (compBoard[row][col].isPiece == true) {
-            compBoard[row][col].prevTargeted = true;
+        if (compBoard[row-1][col].isPiece == true) {
+            compBoard[row-1][col].prevTargeted = true;
             //call a function that marks it on the board
             markHit(row, col, player);
-            --compHealth;
-            if (compHealth == 0) {
+            --opponentHealth;
+            if (opponentHealth == 0) {
                 gameOver = true;
+
             }
         }
         else {//it was a miss
-            compBoard[row][col] = 1;
+            compBoard[row-1][col] = 1;
             markMiss(row, col, player);
         }
     }
@@ -278,17 +260,19 @@ function attack(row, col, player) {
 function playBall(row, col) {
     turnDisplay();
     attack(row, col, 1);
+    playerShots++;
     turn = 1;
     turnDisplay();
     //generate random numbers for a space
     var arow, acol;
     var attackSpace = false;
     do {
-        arow = getRandomIntInclusive(0, 9);
+        arow = getRandomIntInclusive(1, 10);
         acol = getRandomIntInclusive(0, 9);
         attackSpace = prevTargeted(arow, acol, 0);
     } while (attackSpace == true);
     attack(arow, acol, 0);
+    compShots++;
     turn = 0;
     turnDisplay();
 }

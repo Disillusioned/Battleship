@@ -216,6 +216,10 @@ function makeGridClick(time) {
                                 window.alert(illegal);
                             }
                         }
+                        //alert the player of what to do after last piece
+                        var alertDiv = document.getElementById("alert");
+                        alertDiv.innerHTML = "After selecting last piece select a place \n on the opponents grid to attack.";
+                        
                     }
                     else if(counter == 1){
                         var size = counter + 1;
@@ -239,37 +243,15 @@ function makeGridClick(time) {
                                 window.alert(illegal);
                             }
                         }
-                        var alertDiv = document.getElementById("alert");
-                        alertDiv.innerHTML = "After selecting last piece, please click once more on the grid to finalize pieces and start game";
-                    }
-                    else if(counter == 0){ // This will be the code that then does all of the checking for pieces after play has started
-                        if(compPiece == 0){
-                            ready = true;
-                            if(ready == true){
-                                var turn = getRandomIntInclusive(0,1);
-                                playBall();
-                            }
-                        }
+                        ready = true;
+                        turn = 0;
+                        turnDisplay();
                     }
                 }
             }
         }
     }
 }
-
-var gRow, gCol;
-var prevRow, prevCol;
-function captureClick(r, c){
-    //This function holds onto the last received coordinates from a glid click that we then
-    gRow = r;
-    gCol = c;
-}
-
-function waitForClick(){
-    while(prevRow == gRow && prevCol == gCol){
-    }
-}
-
 
 function setCompClick(){
     var compBoardHTML = document.getElementById("computerTable");
@@ -278,7 +260,10 @@ function setCompClick(){
             compBoardHTML.rows[i].cells[j].onclick = function(){
                 var r = this.parentNode.rowIndex;
                 var c = this.cellIndex;
-                playBall(r, c);
+                if(ready == true){
+                    playBall(r, c);
+                }
+
             }
         }
 
@@ -472,206 +457,206 @@ while(compPiece > 0){
 
 
 
-//CODE GRAVEYARD
-//
-//
-// //this function is now deprecated, no longer needed for login area of page
-// function clearClick(){
-//     var clear = document.getElementById("clear");
-//     clear.onclick = function(){
-//         var username = document.getElementById("Username");
-//         var pass = document.getElementById("password");
-        
-//         username.value = "";
-//         password.value = "";
-//     }
-// }
+/*CODE GRAVEYARD
 
 
-// //init the text box on the page for testing
-// function txtInit(){
-//     var txtBox = document.getElementById("test");
-//     txtBox.onchange = function(){
-//     var txt = document.getElementById("textboxtext");
-//     txt.innerHTML = "<p>" + txtBox.value + "</p>";
-//     }
-// }
-
-// //init the selection box on the page for testing.  
-// function selectInit(){
-//     var select = document.getElementById("pieceSelector");
-//     select.onchange = function(){
-//         var txt = document.getElementById("selectText");
-//         txt.innerHTML = "<p>" + select.value.toUpperCase() + "</p>";
-//     }
-// }
+//this function is now deprecated, no longer needed for login area of page
+function clearClick(){
+    var clear = document.getElementById("clear");
+    clear.onclick = function(){
+        var username = document.getElementById("Username");
+        var pass = document.getElementById("password");
+        
+        username.value = "";
+        password.value = "";
+    }
+}
 
 
+//init the text box on the page for testing
+function txtInit(){
+    var txtBox = document.getElementById("test");
+    txtBox.onchange = function(){
+    var txt = document.getElementById("textboxtext");
+    txt.innerHTML = "<p>" + txtBox.value + "</p>";
+    }
+}
 
-// //The Functions here are necessary for page startup
-// function submitClick()
-// {
-//     var submit = document.getElementById("Submit");
-//     submit.onclick = function(){       
+//init the selection box on the page for testing.  
+function selectInit(){
+    var select = document.getElementById("pieceSelector");
+    select.onchange = function(){
+        var txt = document.getElementById("selectText");
+        txt.innerHTML = "<p>" + select.value.toUpperCase() + "</p>";
+    }
+}
+
+
+
+//The Functions here are necessary for page startup
+function submitClick()
+{
+    var submit = document.getElementById("Submit");
+    submit.onclick = function(){       
         
-//         //get data to pass to the POST request
-//         var username = document.getElementById("Username").value;
-//         var password = document.getElementById("password").value;
-//         var data = "userName="+username+"&password="+password;
+        //get data to pass to the POST request
+        var username = document.getElementById("Username").value;
+        var password = document.getElementById("password").value;
+        var data = "userName="+username+"&password="+password;
         
-//         //create a new XHR
-//         var getReq = new XMLHttpRequest();
+        //create a new XHR
+        var getReq = new XMLHttpRequest();
         
-//         //Open the connection async
-//         getReq.open("POST", "http://universe.tc.uvu.edu/cs2550/assignments/PasswordCheck/check.php", true);
+        //Open the connection async
+        getReq.open("POST", "http://universe.tc.uvu.edu/cs2550/assignments/PasswordCheck/check.php", true);
         
-//         //set the loading screen
-//         var div = document.getElementById("test");
-//         div.innerHTML = "<p>Loading...</p>";
+        //set the loading screen
+        var div = document.getElementById("test");
+        div.innerHTML = "<p>Loading...</p>";
         
-//         getReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        getReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         
-//         getReq.onreadystatechange = function(){
-//             //Only really care if it comes back and it worked, if it didnt it just wont do anything
-//             if(getReq.readyState == 4 && getReq.status == 200){
+        getReq.onreadystatechange = function(){
+            //Only really care if it comes back and it worked, if it didnt it just wont do anything
+            if(getReq.readyState == 4 && getReq.status == 200){
                 
-//                 //if the result was valid...
-//                 var valid = getReq.responseText;
-//                 valid = JSON.parse(valid);
-//                 if(valid.result == "valid"){
+                //if the result was valid...
+                var valid = getReq.responseText;
+                valid = JSON.parse(valid);
+                if(valid.result == "valid"){
                     
                     
-//                     //Then load the page:
-//                     //This one initializes and puts the divs and placeholders for the future grids on the screen
-//                     initView();
+                    //Then load the page:
+                    //This one initializes and puts the divs and placeholders for the future grids on the screen
+                    initView();
                     
 
-//                     btnInit();
-//                     txtInit();
-//                     selectInit();
+                    btnInit();
+                    txtInit();
+                    selectInit();
                     
-//                     localStorage.setItem('login', JSON.stringify(valid));
+                    localStorage.setItem('login', JSON.stringify(valid));
                     
-//                     //this should give me the object back from the localstorage
-//                     var timestamp = JSON.parse(localStorage.getItem('login'));
-//                     var userName = timestamp.userName;
-//                     var time = timestamp.timestamp;
+                    //this should give me the object back from the localstorage
+                    var timestamp = JSON.parse(localStorage.getItem('login'));
+                    var userName = timestamp.userName;
+                    var time = timestamp.timestamp;
                 
-//                     var div = document.getElementById("test");
-//                     div.innerHTML = "<p>" + username + " logged in at "+ time + "</p>";
+                    var div = document.getElementById("test");
+                    div.innerHTML = "<p>" + username + " logged in at "+ time + "</p>";
                     
-//                     var pleaseText = document.getElementById("please");
-//                     pleaseText.innerHTML = "";
+                    var pleaseText = document.getElementById("please");
+                    pleaseText.innerHTML = "";
                     
                     
-//                 }
-//                 else if(valid.result == "invalid"){
-//                     var div = document.getElementById("test");
-//                     div.innerHTML = "<p>Invalid Login. Please try again.</p>";
+                }
+                else if(valid.result == "invalid"){
+                    var div = document.getElementById("test");
+                    div.innerHTML = "<p>Invalid Login. Please try again.</p>";
                     
-//                     var playArea = document.getElementById("playArea");
-//                     playArea.innerHTML = "";
-//                 }
-//             } 
-//         }
-//         //actually send the username and password to the server
-//         getReq.send(data);
-//     }
-// }
+                    var playArea = document.getElementById("playArea");
+                    playArea.innerHTML = "";
+                }
+            } 
+        }
+        //actually send the username and password to the server
+        getReq.send(data);
+    }
+}
 
 
 
-// function clearLocalStorage(){
-//     var clearStorage = document.getElementById("clearLocalStorage");
-//     clearStorage.onclick = function(){
-//         console.log(localStorage.getItem('login')); //shows the login object before being deleted
-//         localStorage.clear();
-//         console.log(localStorage.getItem('login')); //shows the login object is no longer there
+function clearLocalStorage(){
+    var clearStorage = document.getElementById("clearLocalStorage");
+    clearStorage.onclick = function(){
+        console.log(localStorage.getItem('login')); //shows the login object before being deleted
+        localStorage.clear();
+        console.log(localStorage.getItem('login')); //shows the login object is no longer there
         
-//         var div = document.getElementById("test");
-//         div.innerHTML = "<p> Local Storage Cleared </p>";
-//     }
-// }
+        var div = document.getElementById("test");
+        div.innerHTML = "<p> Local Storage Cleared </p>";
+    }
+}
 
 
 
 
-//        computerCells[i].onclick =  function(){
-//            var col = this.cellIndex;
-//            var row = this.parentNode.rowIndex;
+       computerCells[i].onclick =  function(){
+           var col = this.cellIndex;
+           var row = this.parentNode.rowIndex;
 
 
-// function hoverMulti(row, col){
-//     var playerArea = document.getElementById("Player");
-//     var playTable = playerArea.getElementsByTagName("table"); // this should get the table from the Player Area
+function hoverMulti(row, col){
+    var playerArea = document.getElementById("Player");
+    var playTable = playerArea.getElementsByTagName("table"); // this should get the table from the Player Area
     
-//     var selectedPiece = document.getElementById("pieceSelector");
-//     if(document.getElementById("radio1").checked){
-//         var orientation = 0; // horizontal selected
-//     }
-//     else if (document.getElementById("radio2").checked){
-//         var orientation = 1; //vertical selected
-//     }
+    var selectedPiece = document.getElementById("pieceSelector");
+    if(document.getElementById("radio1").checked){
+        var orientation = 0; // horizontal selected
+    }
+    else if (document.getElementById("radio2").checked){
+        var orientation = 1; //vertical selected
+    }
 
-//     //need a way to access the column and row that we are hovering over, should do it the same way as the onclick event 
-//     //so what I can do is get the column and row using this keyword
-//     //then pass those into this function inside of the onblur function
+    //need a way to access the column and row that we are hovering over, should do it the same way as the onclick event 
+    //so what I can do is get the column and row using this keyword
+    //then pass those into this function inside of the onblur function
 
-//     playTable[0].rows[row].cells[col].style.backgroundColor = "grey";
+    playTable[0].rows[row].cells[col].style.backgroundColor = "grey";
 
-// }
+}
 
 
-// //This is the function that gets called when a player clicks on a gamegrid
-// //This is going to be the original onclick modifier, it will only work till the player is done placing
-// //pieces, then it will switch to the other one to handle targeting
-// //What if we just have an if statement
-// //if player (time) == 0, the player has not placed piecs yet
-// //player == 1, player has placed pieces and is now doing targeting
-// function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 is computer
-//     if(player == 1){ //computer side
-//     var side = document.getElementById("Computer"); //get the player div
-//     var grid = side.getElementsByTagName("table"); //get the the table in the player div
-//     var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
+//This is the function that gets called when a player clicks on a gamegrid
+//This is going to be the original onclick modifier, it will only work till the player is done placing
+//pieces, then it will switch to the other one to handle targeting
+//What if we just have an if statement
+//if player (time) == 0, the player has not placed piecs yet
+//player == 1, player has placed pieces and is now doing targeting
+function clickBait(r, column, player){ //REMEMBER player 0 is player, player 1 is computer
+    if(player == 1){ //computer side
+    var side = document.getElementById("Computer"); //get the player div
+    var grid = side.getElementsByTagName("table"); //get the the table in the player div
+    var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
     
-//     //Now check if its a hit or a miss.
+    //Now check if its a hit or a miss.
         
-//     if(getSquarePiece(r, column, 1) == true)//It was a piece
-//     {
-//         //It was a hit
-//         //change the piece to say it has been hit (prevTargeted)
-//         //place the graphic of a hit
-//         cell.innerHTML = "<img src=hit.png alt=hit>";
-//         compBoard[r][col].prevTargeted = true;
-//     }
-//     else{
-//         //It was a miss
-//         //change the grid to say that it has been targeted already
-//         //place the miss graphic
-//         cell.innerHTML = "<img src=miss.png alt=miss>";
-//         compBoard[r][col] = 1;
-//     }
+    if(getSquarePiece(r, column, 1) == true)//It was a piece
+    {
+        //It was a hit
+        //change the piece to say it has been hit (prevTargeted)
+        //place the graphic of a hit
+        cell.innerHTML = "<img src=hit.png alt=hit>";
+        compBoard[r][col].prevTargeted = true;
+    }
+    else{
+        //It was a miss
+        //change the grid to say that it has been targeted already
+        //place the miss graphic
+        cell.innerHTML = "<img src=miss.png alt=miss>";
+        compBoard[r][col] = 1;
+    }
     
-//     }
-//     else if(player == 0){
-//     var side = document.getElementById("Player"); //get the player div
-//     var grid = side.getElementsByTagName("table"); //get the the table in the player div
-//     var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
+    }
+    else if(player == 0){
+    var side = document.getElementById("Player"); //get the player div
+    var grid = side.getElementsByTagName("table"); //get the the table in the player div
+    var cell = grid[0].rows[r].cells[column]; //have to say grid[0] because grid is a list of table elements of size 1
     
-//     if(getSquarePiece(r,column, 0) == true)//player piece
-//     {
-//         cell.innerHTML = "<img src=hit.png alt=hit>";
-//         playerBoard[r][col].prevTargeted = true;
-//     }
-//     else{
-//         //It was a miss
-//         cell.innerHTML = "<img src=miss.png alt=miss>";
-//         playerBoard[r][col] == 1;
-//         }
+    if(getSquarePiece(r,column, 0) == true)//player piece
+    {
+        cell.innerHTML = "<img src=hit.png alt=hit>";
+        playerBoard[r][col].prevTargeted = true;
+    }
+    else{
+        //It was a miss
+        cell.innerHTML = "<img src=miss.png alt=miss>";
+        playerBoard[r][col] == 1;
+        }
     
-//     //Now need to display text of where the person clicked, for assignment 4
-//     var putText = document.getElementById("PlayerText");
-//     putText.innerHTML = "<p>You clicked row " + r + " column " + column +".</p>";
+    //Now need to display text of where the person clicked, for assignment 4
+    var putText = document.getElementById("PlayerText");
+    putText.innerHTML = "<p>You clicked row " + r + " column " + column +".</p>";
     
-//     }
-// }
+    }
+}*/
