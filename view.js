@@ -409,15 +409,109 @@ function turnDisplay(){
 
 
 
+//Savestate function
+//For now will run this at the end of every turn, doesnt take a lot to run so it isnt intensive or lock up the game;
+function saveToJSON(){
+    //need a double for loop to iterate through both game grids and save objects
+    //remember that json is name value pairs
+    var numRows = 10;
+    var numCols = 10;
+    var name1 = '"playerB"';
+    var playerB = "{ 'playerB' : [";
+    for (var i = 0; i < numRows; ++i) {
+        playerB += "["
+        for (var j = 0; j < numCols; ++j){   
+            if(playerBoard[i][j] == 0){
+                if(j == 9){
+                    playerB += "0";
+                }
+                else{
+                    playerB += "0,";
+                }
+            }
+            else if(playerBoard[i][j] == 1){
+                if(j == 9){
+                    playerB += "1";
+                }
+                else{
+                    playerB += "1,";
+                }
+            }
+            else if(playerBoard[i][j].isPiece == true){
+                if(j == 9){
+                    playerB += JSON.stringify(playerBoard[i][j]);
+                }
+                playerB += JSON.stringify(playerBoard[i][j]) + ",";
+            }
+        }
+        if(i == 9){
+            playerB += "]";
+        }
+        else{
+            playerB += "],";
+        }
+    }
+    playerB += "],"; // At this point we have written out the entire playerBoard, we need the computer board as well
+    playerB += "\n'compB' :[";
+    for (var i = 0; i < numRows; ++i) {
+        playerB += "["
+        for (var j = 0; j < numCols; ++j){   
+            if(compBoard[i][j] == 0){
+                if(j == 9){
+                    playerB += "0";
+                }
+                else{
+                    playerB += "0,";
+                }
+            }
+            else if(compBoard[i][j] == 1){
+                if(j == 9){
+                    playerB += "1";
+                }
+                else{
+                    playerB += "1,";
+                }
+            }
+            else if(compBoard[i][j].isPiece == true){
+                if(j == 9){
+                    playerB += JSON.stringify(compBoard[i][j]);
+                }
+                playerB += JSON.stringify(compBoard[i][j]) + ",";
+            }
+        }
+        if(i == 9){
+            playerB += "]";
+        }
+        else{
+            playerB += "],";
+        }
+    }
+    playerB += "],";
+    //End of computer Board generation
 
+    playerB+= "'playHealth' : " + playerHealth.toString() + ",";
+    playerB+= "'compHealth' : " + opponentHealth.toString() + ",";
+    playerB += "'turn' : " + turn;
 
+    playerB += "}"; // This is the last thing needed to be attached to the entire JSON, so it should be the last line
+    JSON.stringify(playerB);
+    localStorage.setItem("gamestate", playerB);
+    console.log(playerB);
+}
+
+function saveBtnInit(){
+    var saveBtn = document.getElementById("save");
+    saveBtn.onclick = function(){
+        saveToJSON();
+    }
+}
 
 
 
 
 //CALLED FUNCTIONS:
 btnInit();
-
+saveBtnInit();
 
 while(compPiece > 0){
     compPlace();

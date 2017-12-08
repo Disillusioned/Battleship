@@ -328,6 +328,7 @@ function playBall(row, col) {
         turn = 0;
         turnDisplay();
     }
+    saveToJSON();
 }
 
 function gameOverCheck(){
