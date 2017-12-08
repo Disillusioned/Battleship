@@ -375,7 +375,7 @@ function markHit(row, col, player){
     if(player == 0){//marking the players board
         var board = document.getElementById("playerTable");
         var td = board.getElementsByTagName("table");
-        board.rows[row].cells[col].setAttribute("bgcolor", "red");   
+        board.rows[row+1].cells[col].setAttribute("bgcolor", "red");   
     }
     else{
         var board = document.getElementById("computerTable");
@@ -388,7 +388,7 @@ function markMiss(row,col,player){
     if(player == 0){//marking the players board
         var board = document.getElementById("playerTable");
         var td = board.getElementsByTagName("table");
-        board.rows[row].cells[col].setAttribute("bgcolor", "blue");   
+        board.rows[row+1].cells[col].setAttribute("bgcolor", "blue");   
     }
     else{
         var board = document.getElementById("computerTable");

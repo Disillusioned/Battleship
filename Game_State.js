@@ -222,8 +222,8 @@ function insertComp(row, col, size, orient, type){
 function attack(row, col, player) {
     if (player == 0) { //attacking the player
         //Check if it was a hit or miss
-        if (playerBoard[row-1][col].isPiece == true) {
-            playerBoard[row-1][col].prevTargeted = true;
+        if (playerBoard[row][col].isPiece == true) {
+            playerBoard[row][col].prevTargeted = true;
             //call a function that marks it on the board
             markHit(row, col, player);
             --playerHealth;
@@ -232,7 +232,7 @@ function attack(row, col, player) {
             }
         }
         else {//it was a miss
-            playerBoard[row-1][col] = 1;
+            playerBoard[row][col] = 1;
             markMiss(row, col, player);
         }
     }
@@ -267,7 +267,7 @@ function playBall(row, col) {
     var arow, acol;
     var attackSpace = false;
     do {
-        arow = getRandomIntInclusive(1, 10);
+        arow = getRandomIntInclusive(0, 9);
         acol = getRandomIntInclusive(0, 9);
         attackSpace = prevTargeted(arow, acol, 0);
     } while (attackSpace == true);
