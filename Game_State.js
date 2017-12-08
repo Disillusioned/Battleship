@@ -230,18 +230,22 @@ function attack(row, col, player) {
             if (playerHealth == 0) {
                 gameOver = true;
             }
+            prevHit = true;
         }
         else {//it was a miss
             playerBoard[row][col] = 1;
             markMiss(row, col, player);
+            prevHit = false;
         }
     }
-    else {
+    else { //Attacking the computer
         //Check if it was a hit or miss
         if (compBoard[row-1][col].isPiece == true) {
             compBoard[row-1][col].prevTargeted = true;
             //call a function that marks it on the board
             markHit(row, col, player);
+            var explode = document.getElementById("explosion");
+            explode.play();
             --opponentHealth;
             if (opponentHealth == 0) {
                 gameOver = true;
@@ -255,26 +259,84 @@ function attack(row, col, player) {
     }
 }
 
+//Global variables for gameplay to function
+var prevHit = false; //this variable is to be used to determine if the previous shot was a hit to make follow up shots
+var arow, acol; //these are the variables that we assign the random numbers to so the computer can attack
 
 //GAMEPLAY FUNCTIONS
 function playBall(row, col) {
+    //Player Turn
     turnDisplay();
     attack(row, col, 1);
+    gameOverCheck();
     playerShots++;
     turn = 1;
     turnDisplay();
+
+    //Computer Turn
     //generate random numbers for a space
-    var arow, acol;
-    var attackSpace = false;
-    do {
-        arow = getRandomIntInclusive(0, 9);
-        acol = getRandomIntInclusive(0, 9);
-        attackSpace = prevTargeted(arow, acol, 0);
-    } while (attackSpace == true);
-    attack(arow, acol, 0);
-    compShots++;
-    turn = 0;
-    turnDisplay();
+    if (prevHit == true) {
+        if (arow == 9 || acol == 9) { //decrement instead of increment
+            var rowOrCol = getRandomIntInclusive(0, 1);
+            if (rowOrCol == 0) {//decrement row and attack
+                --arow;
+                attack(arow, acol, 0);
+                gameOverCheck();
+                ++compShots;
+                turn = 0;
+                turnDisplay();
+            }
+            else { //decrement col
+                --acol;
+                attack(arow, acol, 0);
+                gameOverCheck();
+                ++compShots;
+                turn = 0;
+                turnDisplay();
+            }
+        }
+        else {
+            var rowOrCol = getRandomIntInclusive(0, 1);
+            if (rowOrCol == 0) {//decrement row and attack
+                ++arow;
+                attack(arow, acol, 0);
+                gameOverCheck();
+                ++compShots;
+                turn = 0;
+                turnDisplay();
+            }
+            else { //decrement col
+                ++acol;
+                attack(arow, acol, 0);
+                gameOverCheck();
+                ++compShots;
+                turn = 0;
+                turnDisplay();
+            }
+        }
+    }
+    else {
+        var attackSpace = false;
+        do {
+            arow = getRandomIntInclusive(0, 9);
+            acol = getRandomIntInclusive(0, 9);
+            attackSpace = prevTargeted(arow, acol, 0);
+        } while (attackSpace == true);
+        attack(arow, acol, 0);
+        gameOverCheck();
+        compShots++;
+        turn = 0;
+        turnDisplay();
+    }
+}
+
+function gameOverCheck(){
+    if(playerHealth == 0){
+        window.alert("Computer has won!");
+    }
+    else if(opponentHealth == 0){
+        window.alert("Player has won!");
+    }
 }
 
 
